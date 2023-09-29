@@ -1,54 +1,83 @@
 'use client';
-import { Button, Drawer } from 'antd';
-import { Footer } from 'antd/es/layout/layout';
+import {
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UploadOutlined,
+    UserOutlined,
+    VideoCameraOutlined,
+} from '@ant-design/icons';
+import { Button, Layout, Menu, theme } from 'antd';
+
 import { FC, useState } from 'react';
+const { Header, Content, Footer, Sider } = Layout;
 
 const Home: FC = () => {
-    const [open, setOpen] = useState(false);
+    const [collapsed, setCollapsed] = useState(false);
+    const {
+        token: { colorBgContainer },
+    } = theme.useToken();
 
-    const showDrawer = () => {
-        setOpen(true);
-    };
-
-    const onClose = () => {
-        setOpen(false);
-    };
     return (
-        <>
-            <Drawer
-                title='Basic Drawer'
-                placement='bottom'
-                onClose={onClose}
-                open={open}
-            >
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Drawer>
-
-            {
-                <>
+        <Layout style={{ height: '100vh' }}>
+            <Sider trigger={null} collapsible collapsed={collapsed}>
+                <h3 align='middle' style={{ color: 'white' }}>
+                    Uni-App
+                </h3>
+                <Menu
+                    theme='dark'
+                    mode='inline'
+                    defaultSelectedKeys={['1']}
+                    items={[
+                        {
+                            key: '1',
+                            icon: <UserOutlined />,
+                            label: 'nav 1',
+                        },
+                        {
+                            key: '2',
+                            icon: <VideoCameraOutlined />,
+                            label: 'nav 2',
+                        },
+                        {
+                            key: '3',
+                            icon: <UploadOutlined />,
+                            label: 'nav 3',
+                        },
+                    ]}
+                />
+            </Sider>
+            <Layout>
+                <Header style={{ padding: 0, background: colorBgContainer }}>
                     <Button
-                        type='primary'
-                        onClick={showDrawer}
+                        type='text'
+                        icon={
+                            collapsed ? (
+                                <MenuUnfoldOutlined />
+                            ) : (
+                                <MenuFoldOutlined />
+                            )
+                        }
+                        onClick={() => setCollapsed(!collapsed)}
                         style={{
-                            position: 'absolute',
-
-                            margin: 'auto',
-                            top: '10%',
-                            left: '50%',
-                            zIndex: '10',
+                            fontSize: '16px',
+                            width: 64,
+                            height: 64,
                         }}
-                    >
-                        Open
-                    </Button>
-                </>
-            }
-
-            <Footer style={{ textAlign: 'center' }}>
-                Ant Design ©2023 Created by Ant UED
-            </Footer>
-        </>
+                    />
+                </Header>
+                <Content
+                    style={{
+                        margin: '24px 16px',
+                        padding: 24,
+                        minHeight: 280,
+                        background: colorBgContainer,
+                    }}
+                >
+                    Nive
+                </Content>
+                <Footer>Hallo</Footer>
+            </Layout>
+        </Layout>
     );
 };
 

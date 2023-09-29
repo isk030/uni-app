@@ -32,7 +32,7 @@
         "@react-three/drei": "^9.83.8",
         "@react-three/fiber": "^8.14.1",
         "@react-three/postprocessing": "^2.15.1",
-        "antd": "^5.9.0",
+        "antd": "^5.9.3",
         "formik": "^2.4.4",
         "next": "^13.4.19",
         "prisma": "^5.2.0",
