@@ -28,7 +28,7 @@ export function MultiLevelSidebar() {
                     variant='h5'
                     color='blue-gray'
                 >
-                    UniApp
+                    Uni-App
                 </Typography>
             </div>
             <List>
