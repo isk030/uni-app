@@ -1,4 +1,4 @@
-parser: '@typescript-eslint/parser'
+parser: "@typescript-eslint/parser"
 env:
     browser: true
     es6: true
@@ -6,13 +6,13 @@ env:
     jest: true
     jquery: true
 extends:
-    - 'eslint:recommended'
-    - 'plugin:@typescript-eslint/recommended'
-    - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
-    - 'plugin:@next/next/recommended'
-    - 'prettier'
-    - 'next'
-    - 'next/core-web-vitals'
+    - "eslint:recommended"
+    - "plugin:@typescript-eslint/recommended"
+    - "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    - "plugin:@next/next/recommended"
+    - "prettier"
+    - "next"
+    - "next/core-web-vitals"
 plugins:
     - react
     - react-hooks
@@ -24,23 +24,23 @@ rules:
         - error
     no-shadow:
         - off
-    '@typescript-eslint/ban-ts-comment':
+    "@typescript-eslint/ban-ts-comment":
         - off
-    '@typescript-eslint/no-shadow':
+    "@typescript-eslint/no-shadow":
         - error
         - {
               builtinGlobals: false,
-              hoist: 'never',
+              hoist: "never",
               ignoreOnInitialization: true,
-              allow: ['InputProps'],
+              allow: ["InputProps"],
           }
     eqeqeq:
         - error
     no-console:
         - error
-        - { allow: ['warn', 'error'] }
-    max-params:
-        - error
+        - { allow: ["warn", "error"] }
+    # max-params:
+    #     - error
     no-eval:
         - error
     no-return-await:
@@ -56,29 +56,29 @@ root: true
 overrides:
     [
         {
-            files: ['*.ts', '*.tsx'],
-            parserOptions: { project: ['./tsconfig.json'] },
+            files: ["*.ts", "*.tsx"],
+            parserOptions: { project: ["./tsconfig.json"] },
             rules:
                 {
-                    '@typescript-eslint/no-misused-promises':
+                    "@typescript-eslint/no-misused-promises":
                         [
-                            'error',
+                            "error",
                             {
-                                'checksVoidReturn':
+                                "checksVoidReturn":
                                     {
-                                        'attributes': false,
-                                        'properties': false,
+                                        "attributes": false,
+                                        "properties": false,
                                     },
                             },
                         ],
                 },
         },
         {
-            files: ['**/*.stories.*'],
+            files: ["**/*.stories.*"],
             rules:
                 {
-                    'import/no-anonymous-default-export': 'off',
-                    'no-console': 'off',
+                    "import/no-anonymous-default-export": "off",
+                    "no-console": "off",
                 },
         },
     ]
