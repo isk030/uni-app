@@ -1,6 +1,16 @@
 'use client';
-import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import { InboxIcon, ShoppingBagIcon } from '@heroicons/react/24/solid';
+import {
+    faBookOpen,
+    faBrain,
+    faClapperboard,
+    faCubes,
+    faMobile,
+    faPerson,
+    faRobot,
+    faVrCardboard,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
     Accordion,
     AccordionBody,
@@ -11,10 +21,17 @@ import {
     ListItemPrefix,
     Typography,
 } from '@material-tailwind/react';
-import React from 'react';
+import Link from 'next/link';
+import { FC, useState } from 'react';
 
-export function MultiLevelSidebar() {
-    const [open, setOpen] = React.useState(0);
+type MultiLevelSidebarProps = {
+    openSubs?: number;
+};
+
+export const MultiLevelSidebar: FC<MultiLevelSidebarProps> = ({
+    openSubs = 0,
+}) => {
+    const [open, setOpen] = useState(openSubs);
 
     const handleOpen = (value: number) => {
         setOpen(open === value ? 0 : value);
@@ -28,7 +45,7 @@ export function MultiLevelSidebar() {
                     variant='h5'
                     color='blue-gray'
                 >
-                    Uni-App
+                    <Link href='/'>Uni-App</Link>
                 </Typography>
             </div>
             <List>
@@ -46,9 +63,13 @@ export function MultiLevelSidebar() {
                 >
                     <ListItem>
                         <ListItemPrefix>
-                            <InboxIcon className='h-5 w-5' />
+                            <FontAwesomeIcon
+                                className='h-5 w-5'
+                                icon={faPerson}
+                            />
                         </ListItemPrefix>
-                        Iskender Dilaver
+
+                        <Link href='/personal'>Iskender Dilaver</Link>
                     </ListItem>
                     <ListItem className='p-0' selected={open === 2}>
                         <AccordionHeader
@@ -56,7 +77,10 @@ export function MultiLevelSidebar() {
                             className='border-b-0 p-3'
                         >
                             <ListItemPrefix>
-                                <ShoppingBagIcon className='h-5 w-5' />
+                                <FontAwesomeIcon
+                                    className='h-5 w-5'
+                                    icon={faBookOpen}
+                                />
                             </ListItemPrefix>
                             <Typography
                                 color='blue-gray'
@@ -70,66 +94,63 @@ export function MultiLevelSidebar() {
                         <List className='p-0'>
                             <ListItem>
                                 <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className='h-3 w-5'
+                                    <FontAwesomeIcon
+                                        className='h-5 w-5'
+                                        icon={faVrCardboard}
                                     />
                                 </ListItemPrefix>
-                                Augmented and Virtual Reality
+                                <Link href='/augmented-and-virtual-reality'>
+                                    Augmented and Virtual Reality
+                                </Link>
                             </ListItem>
                             <ListItem>
                                 <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className='h-3 w-5'
+                                    <FontAwesomeIcon
+                                        className='h-5 w-5'
+                                        icon={faBrain}
                                     />
                                 </ListItemPrefix>
-                                Deep Learning
+                                <Link href='/deep-learning'>Deep Learning</Link>
                             </ListItem>
                             <ListItem>
                                 <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className='h-3 w-5'
+                                    <FontAwesomeIcon
+                                        className='h-5 w-5'
+                                        icon={faCubes}
                                     />
                                 </ListItemPrefix>
-                                Deep Learning
+                                <Link href='/graphical-visualisation-technologies'>
+                                    Graphical Visualisation Technologies
+                                </Link>
                             </ListItem>
                             <ListItem>
                                 <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className='h-3 w-5'
+                                    <FontAwesomeIcon
+                                        className='h-5 w-5'
+                                        icon={faRobot}
                                     />
                                 </ListItemPrefix>
-                                Graphical Visualisation Technologies
+                                <Link href='/ki'>Künstliche Intelligenz</Link>
                             </ListItem>
                             <ListItem>
                                 <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className='h-3 w-5'
+                                    <FontAwesomeIcon
+                                        className='h-5 w-5'
+                                        icon={faMobile}
                                     />
                                 </ListItemPrefix>
-                                Künstliche Intelligenz
+                                <Link href='/mobile-application-development'>
+                                    Mobile Application Development
+                                </Link>
                             </ListItem>
                             <ListItem>
                                 <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className='h-3 w-5'
+                                    <FontAwesomeIcon
+                                        className='h-5 w-5'
+                                        icon={faClapperboard}
                                     />
                                 </ListItemPrefix>
-                                Mobile Application Development
-                            </ListItem>
-                            <ListItem>
-                                <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className='h-3 w-5'
-                                    />
-                                </ListItemPrefix>
-                                Motion Design
+                                <Link href='/motion-design'>Motion Design</Link>
                             </ListItem>
                         </List>
                     </AccordionBody>
@@ -137,4 +158,4 @@ export function MultiLevelSidebar() {
             </List>
         </Card>
     );
-}
+};
