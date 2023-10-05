@@ -7,11 +7,22 @@ import {
     TabsBody,
     TabsHeader,
 } from '@material-tailwind/react';
-import React from 'react';
+import { FC, useState } from 'react';
 
-export function UnderlineTabs() {
-    const [activeTab, setActiveTab] = React.useState('html');
-    const data = [
+type TabElement = {
+    label: string;
+    value: string;
+    desc: string;
+};
+
+type TabData = {
+    data: Array<TabElement>;
+    initialActiveTab: string;
+};
+
+export const UnderlineTabs: FC<TabData> = ({ data, initialActiveTab }) => {
+    const [activeTab, setActiveTab] = useState(initialActiveTab || 'html');
+    const dataContainer = data || [
         {
             label: 'HTML',
             value: 'html',
@@ -46,6 +57,7 @@ export function UnderlineTabs() {
       constantly trying to express ourselves and actualize our dreams.`,
         },
     ];
+
     return (
         <Card className='h-[calc(100vh-2rem)] w-full my-4 p-4  shadow-xl shadow-blue-gray-900/5'>
             <Tabs value={activeTab}>
@@ -56,7 +68,7 @@ export function UnderlineTabs() {
                             'bg-transparent border-b-2 border-gray-900 shadow-none rounded-none',
                     }}
                 >
-                    {data.map(({ label, value }) => (
+                    {dataContainer.map(({ label, value }) => (
                         <Tab
                             key={value}
                             value={value}
@@ -70,7 +82,7 @@ export function UnderlineTabs() {
                     ))}
                 </TabsHeader>
                 <TabsBody>
-                    {data.map(
+                    {dataContainer.map(
                         ({ value, desc }) =>
                             value && (
                                 <TabPanel key={value} value={value}>
@@ -82,4 +94,4 @@ export function UnderlineTabs() {
             </Tabs>
         </Card>
     );
-}
+};

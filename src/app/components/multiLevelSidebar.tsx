@@ -119,6 +119,7 @@ export const MultiLevelSidebar: FC<MultiLevelSidebarProps> = ({
                                         icon={faCubes}
                                     />
                                 </ListItemPrefix>
+
                                 <Link href='/graphical-visualisation-technologies'>
                                     Graphical Visualisation Technologies
                                 </Link>

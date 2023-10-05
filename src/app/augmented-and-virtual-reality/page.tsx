@@ -2,13 +2,13 @@
 import { FC } from 'react';
 import { LayoutGrid } from '../components/layoutGrid';
 import { MultiLevelSidebar } from '../components/multiLevelSidebar';
-import { UnderlineTabs } from '../components/tabs';
+import { AugAndVrTabs } from './tabs';
 
 const AugAndVrLayout: FC = () => {
     return (
         <LayoutGrid
             navigation={<MultiLevelSidebar openSubs={2} />}
-            content={<UnderlineTabs />}
+            content={<AugAndVrTabs />}
             footer={<></>}
         ></LayoutGrid>
     );
