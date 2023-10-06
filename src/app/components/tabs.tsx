@@ -12,15 +12,20 @@ import { FC, useState } from 'react';
 type TabElement = {
     label: string;
     value: string;
-    desc: string;
+    desc: string | JSX.Element;
 };
 
 type TabData = {
     data: Array<TabElement>;
-    initialActiveTab: string;
+    initialActiveTab: string | JSX.Element;
+    menu?: JSX.Element;
 };
 
-export const UnderlineTabs: FC<TabData> = ({ data, initialActiveTab }) => {
+export const UnderlineTabs: FC<TabData> = ({
+    data,
+    initialActiveTab,
+    menu,
+}) => {
     const [activeTab, setActiveTab] = useState(initialActiveTab || 'html');
     const dataContainer = data || [
         {
@@ -60,6 +65,8 @@ export const UnderlineTabs: FC<TabData> = ({ data, initialActiveTab }) => {
 
     return (
         <Card className='h-[calc(100vh-2rem)] w-full my-4 p-4  shadow-xl shadow-blue-gray-900/5'>
+            {menu && menu}
+            <br />
             <Tabs value={activeTab}>
                 <TabsHeader
                     className='rounded-none border-b border-blue-gray-50 bg-transparent p-0'

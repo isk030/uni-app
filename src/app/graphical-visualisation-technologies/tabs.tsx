@@ -1,3 +1,7 @@
+'use client';
+import { Option, Select } from '@material-tailwind/react';
+import { FC, useState } from 'react';
+import { create } from 'zustand';
 import { UnderlineTabs } from '../components/tabs';
 
 const Task = () => {
@@ -82,6 +86,47 @@ const data = [
         desc: `Hier sind Kommentare`,
     },
 ];
+
+interface BearState {
+    activeValue: string;
+    setActiveValue: (value: string) => void;
+}
+
+const useBearStore = create<BearState>()((set) => ({
+    activeValue: '',
+    setActiveValue: (value) => set(() => ({ activeValue: value })),
+}));
+
 export const GraphicalVisualizationTabs = () => {
-    return <UnderlineTabs data={data} initialActiveTab={'task'} />;
+    const activeValue: string = useBearStore((state) => state.activeValue);
+    activeValue && window.console.log(activeValue);
+    return (
+        <UnderlineTabs
+            data={data}
+            initialActiveTab={'task'}
+            menu={<TabOptions />}
+        />
+    );
+};
+
+const TabOptions: FC = () => {
+    const [activeValue, setActiveValue] = useState('ESA 1');
+    const storeValue = useBearStore((state) => state.setActiveValue);
+    return (
+        <div className='w-72'>
+            <Select
+                name='ESA'
+                label='Wähle ESAs'
+                value={activeValue}
+                onChange={(value: string | undefined) => {
+                    value && setActiveValue(value);
+                    value && storeValue(value);
+                }}
+            >
+                <Option value='ESA 1'>ESA 1</Option>
+                <Option value='ESA 2'>ESA 2</Option>
+                <Option value='ESA 3'>ESA 3</Option>
+            </Select>
+        </div>
+    );
 };
