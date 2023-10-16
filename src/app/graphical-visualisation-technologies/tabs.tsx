@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 'use client';
@@ -291,15 +292,25 @@ export const GraphicalVisualizationTabs = () => {
             label: 'Lösung',
             value: 'solution',
             desc: (
-                <>
-                    <img
-                        src={`/sprite/spritesheet_${iteration}.png`}
-                        width='512'
-                        height='512'
-                        alt=''
-                    />
+                <div className='grid grid-cols-2 gap-4'>
+                    <div>
+                        <img
+                            src={`/sprite/spritesheet_${iteration}.png`}
+                            width='512'
+                            height='512'
+                            alt=''
+                        />
+                        <h3 className='font-bold'>Interaktion:</h3>
+                        <p>
+                            'a': Automatisches Rotieren an- oder ausschalten(in
+                            letzte bekannter Drehrichtung)
+                        </p>
+                        <p>'r': Nächtes Einzelbild anzeigen nach rechts </p>
+                        <p>'l': Nächstes Einzelbild anzeigen nach links</p>
+                    </div>
+
                     <Cat />
-                </>
+                </div>
             ),
         },
         {
@@ -341,8 +352,12 @@ const TabOptions: FC = () => {
                 }}
             >
                 <Option value='TaskOne'>ESA 1</Option>
-                <Option value='TaskTwo'>ESA 2</Option>
-                <Option value='TaskThree'>ESA 3</Option>
+                <Option disabled value='TaskTwo'>
+                    ESA 2
+                </Option>
+                <Option disabled value='TaskThree'>
+                    ESA 3
+                </Option>
             </Select>
         </div>
     );
