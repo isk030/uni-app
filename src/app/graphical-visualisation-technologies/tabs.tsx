@@ -304,6 +304,9 @@ export const GraphicalVisualizationTabs = () => {
                         </p>
                         <p>'r': Nächtes Einzelbild anzeigen nach rechts </p>
                         <p>'l': Nächstes Einzelbild anzeigen nach links</p>
+                        <br />
+                        <br />
+                       <p>Hinweis: Es wird ein aktueller Chromebrowser empfohlen. Aufgrund der etwas großen Bilder und meinem Server Provider, ist das initiale Laden etwas langsam.</p>
                     </div>
 
                     <Cat />
