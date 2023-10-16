@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import { Option, Select } from '@material-tailwind/react';
 import { FC, useEffect, useState } from 'react';
@@ -158,8 +160,115 @@ type ComponentType = {
     [key: string]: JSX.Element | undefined;
 };
 
+const Cat = () => {
+    const [iteration2, setIteration2] = useState(0);
+    const iterate2 = () => {
+        setIteration2(iteration2 + 1);
+    };
+    useEffect(() => {
+        if (iteration2 < 0) {
+            setIteration2(345);
+        }
+
+        if (iteration2 >= 6) {
+            setIteration2(0);
+        }
+
+        setTimeout(iterate2, 60);
+    }, [iteration2]);
+
+    return (
+        <img
+            src={`/sprite/cat_${iteration2}.png`}
+            width='256'
+            height='256'
+            alt=''
+        />
+    );
+};
+
 export const GraphicalVisualizationTabs = () => {
     const activeValue: string = useActiveEsaStore((state) => state.activeEsa);
+    const [iteration, setIteration] = useState(0);
+    const [stop, setStop] = useState(false);
+    const [left, setLeft] = useState(true);
+
+    const iterate = () => {
+        if (left) {
+            if (iteration >= 360) {
+                setIteration(0);
+                return;
+            }
+            setIteration(iteration + 15);
+        } else {
+            if (iteration < 0) {
+                setIteration(345);
+                return;
+            }
+            setIteration(iteration - 15);
+        }
+    };
+
+    const keyDownHandler = (event: KeyboardEvent) => {
+        window.console.log('User pressed: ', event.key);
+
+        if (event.key === 'r') {
+            event.preventDefault();
+            setStop(true);
+            setLeft(false);
+            setTimeout(() => {
+                return null;
+            }, 200);
+            if (iteration >= 360 || iteration < 0) {
+                setIteration(345);
+            } else {
+                setIteration(iteration - 15);
+            }
+        }
+
+        if (event.key === 'l') {
+            event.preventDefault();
+            setStop(true);
+            setLeft(true);
+            setTimeout(() => {
+                return null;
+            }, 200);
+            if (iteration >= 360 || iteration <= 0) {
+                setIteration(15);
+            } else {
+                setIteration(iteration + 15);
+            }
+        }
+
+        if (event.key === 'a') {
+            event.preventDefault();
+            setStop(!stop);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('keydown', keyDownHandler);
+        window.console.log('iteration: ', iteration);
+
+        if (iteration < 0) {
+            setIteration(345);
+        }
+
+        if (iteration >= 360) {
+            setIteration(0);
+        }
+        if (!stop) {
+            if (iteration >= 360) {
+                setIteration(0);
+            } else {
+                setTimeout(iterate, 60);
+            }
+        }
+
+        return () => {
+            document.removeEventListener('keydown', keyDownHandler);
+        };
+    }, [iteration, stop]);
 
     const components: ComponentType = {
         TaskOne: <TaskOne />,
@@ -181,7 +290,17 @@ export const GraphicalVisualizationTabs = () => {
         {
             label: 'Lösung',
             value: 'solution',
-            desc: `Das ist die Lösung`,
+            desc: (
+                <>
+                    <img
+                        src={`/sprite/spritesheet_${iteration}.png`}
+                        width='512'
+                        height='512'
+                        alt=''
+                    />
+                    <Cat />
+                </>
+            ),
         },
         {
             label: 'Dokumentation',
@@ -214,7 +333,7 @@ const TabOptions: FC = () => {
         <div className='w-72'>
             <Select
                 name='ESA'
-                label='Wähle ESAs'
+                label='Wähle ESA'
                 value={activeValue}
                 onChange={(value: string | undefined) => {
                     value && setActiveValue(value);
