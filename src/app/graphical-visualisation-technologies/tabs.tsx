@@ -175,7 +175,7 @@ const Cat = () => {
             setIteration2(0);
         }
 
-        setTimeout(iterate2, 60);
+        setTimeout(iterate2, 250);
     }, [iteration2]);
 
     return (
@@ -259,7 +259,7 @@ export const GraphicalVisualizationTabs = () => {
             if (iteration >= 360) {
                 setIteration(0);
             } else {
-                setTimeout(iterate, 60);
+                setTimeout(iterate, 250);
             }
         }
 
