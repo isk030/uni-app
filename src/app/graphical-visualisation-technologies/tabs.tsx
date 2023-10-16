@@ -180,7 +180,7 @@ const Cat = () => {
 
     return (
         <img
-            src={`/sprite/cat_${iteration2}.png`}
+            src={`/sprite/cat_${iteration2}-min.png`}
             width='256'
             height='256'
             alt=''
@@ -292,7 +292,7 @@ export const GraphicalVisualizationTabs = () => {
                 <div className='grid grid-cols-2 gap-4'>
                     <div>
                         <img
-                            src={`/sprite/spritesheet_${iteration}.png`}
+                            src={`/sprite/spritesheet_${iteration}-min.png`}
                             width='512'
                             height='512'
                             alt=''
