@@ -302,8 +302,12 @@ export const GraphicalVisualizationTabs = () => {
                             'a': Automatisches Rotieren an- oder ausschalten(in
                             letzte bekannter Drehrichtung)
                         </p>
-                        <p>'r': Nächtes Einzelbild anzeigen nach rechts drehend</p>
-                        <p>'l': Nächstes Einzelbild anzeigen nach links drehend</p>
+                        <p>
+                            'r': Nächtes Einzelbild anzeigen nach rechts drehend
+                        </p>
+                        <p>
+                            'l': Nächstes Einzelbild anzeigen nach links drehend
+                        </p>
                         <br />
                         <br />
                         <p>
