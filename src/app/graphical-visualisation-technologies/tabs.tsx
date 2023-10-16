@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import { Option, Select } from '@material-tailwind/react';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { FC, useEffect, useState } from 'react';
 import { create } from 'zustand';
 import { UnderlineTabs } from '../components/tabs';
