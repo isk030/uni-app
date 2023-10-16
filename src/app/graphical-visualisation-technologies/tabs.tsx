@@ -3,7 +3,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import { Option, Select } from '@material-tailwind/react';
-import Image from 'next/legacy/image';
 import { FC, useEffect, useState } from 'react';
 import { create } from 'zustand';
 import { UnderlineTabs } from '../components/tabs';
@@ -180,7 +179,7 @@ const Cat = () => {
     }, [iteration2]);
 
     return (
-        <Image
+        <img
             src={`/sprite/cat_${iteration2}.png`}
             width='256'
             height='256'
@@ -292,7 +291,7 @@ export const GraphicalVisualizationTabs = () => {
             desc: (
                 <div className='grid grid-cols-2 gap-4'>
                     <div>
-                        <Image
+                        <img
                             src={`/sprite/spritesheet_${iteration}.png`}
                             width='512'
                             height='512'
