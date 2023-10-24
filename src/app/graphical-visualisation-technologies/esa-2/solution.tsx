@@ -36,7 +36,7 @@ const SolutionTwo: React.FC = () => {
 
         const fragmentShaderSource = `
       void main(void) {
-        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Rot
+        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Linienfarbe (in diesem Fall rot)
       }
     `;
 
@@ -65,10 +65,10 @@ const SolutionTwo: React.FC = () => {
         gl.enableVertexAttribArray(coord);
         gl.vertexAttribPointer(coord, 2, gl.FLOAT, false, 0, 0);
 
-        // Zeichnen Sie das Polygon
+        // Zeichnen Sie das Polygon als Linien
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.TRIANGLE_FAN, 0, numEdges); // Polygon mit 30 Ecken
+        gl.drawArrays(gl.LINE_LOOP, 0, numEdges); // Polygon mit 35 Ecken als Linien
     }, []);
 
     return <canvas ref={canvasRef} width={800} height={600}></canvas>;
