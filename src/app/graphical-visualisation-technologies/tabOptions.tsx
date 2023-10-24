@@ -21,9 +21,7 @@ export const TabOptions: FC = () => {
                 }}
             >
                 <Option value='TaskOne'>ESA 1</Option>
-                <Option disabled value='TaskTwo'>
-                    ESA 2
-                </Option>
+                <Option value='TaskTwo'>ESA 2</Option>
                 <Option disabled value='TaskThree'>
                     ESA 3
                 </Option>

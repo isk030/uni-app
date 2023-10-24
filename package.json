@@ -42,6 +42,7 @@
         "prisma": "^5.2.0",
         "react": "^0.0.0-experimental-09fbee89d-20231013",
         "react-dom": "^0.0.0-experimental-09fbee89d-20231013",
+        "react-markdown": "^9.0.0",
         "resize-observer": "^1.0.4",
         "three": "^0.156.1",
         "zod": "^3.22.2",

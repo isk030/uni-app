@@ -12,8 +12,10 @@ import { TaskThree } from './esa-3/taskThree';
 import { useActiveEsaStore } from './hooks/useActiveEsaStore';
 import { TabOptions } from './tabOptions';
 
-type ComponentType = {
-    [key: string]: JSX.Element | undefined;
+type DataComponentsType = {
+    [key: string]: {
+        [key: string]: JSX.Element | string | undefined;
+    };
 };
 
 export const GraphicalVisualizationTabs = () => {
@@ -73,10 +75,28 @@ export const GraphicalVisualizationTabs = () => {
         }
     };
 
-    const components: ComponentType = {
-        TaskOne: <TaskOne />,
-        TaskTwo: <TaskTwo />,
-        TaskThree: <TaskThree />,
+    const dataComponents: DataComponentsType = {
+        TaskOne: {
+            task: <TaskOne />,
+            idea: '',
+            solution: <SolutionOne iteration={iteration} />,
+            documentation: <DocumentationOne />,
+            comments: '',
+        },
+        TaskTwo: {
+            task: <TaskTwo />,
+            idea: '',
+            solution: '',
+            documentation: '',
+            comments: '',
+        },
+        TaskThree: {
+            task: <TaskThree />,
+            idea: '',
+            solution: '',
+            documentation: '',
+            comments: '',
+        },
     };
 
     useEffect(() => {
@@ -106,7 +126,7 @@ export const GraphicalVisualizationTabs = () => {
         {
             label: 'Aufgabenstellung',
             value: 'task',
-            desc: components[activeValue],
+            desc: dataComponents[activeValue]?.task,
         },
         {
             label: 'Idee',
@@ -116,19 +136,20 @@ export const GraphicalVisualizationTabs = () => {
         {
             label: 'Lösung',
             value: 'solution',
-            desc: <SolutionOne iteration={iteration} />,
+            desc: dataComponents[activeValue]?.solution,
         },
         {
             label: 'Dokumentation',
             value: 'documentation',
-            desc: <DocumentationOne />,
+            desc: dataComponents[activeValue]?.documentation,
         },
         {
             label: 'Kommentare',
             value: 'comments',
-            desc: `Hier ist leider noch nichts`,
+            desc: `Hier ist noch nichts`,
         },
     ];
+
     return (
         <UnderlineTabs
             data={data}
