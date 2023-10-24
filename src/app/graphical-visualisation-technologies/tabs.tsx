@@ -2,11 +2,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import { useEffect, useState } from 'react';
 import { UnderlineTabs } from '../components/tabs';
 import { DocumentationOne } from './esa-1/documentation';
 import { SolutionOne } from './esa-1/solution';
 import { TaskOne } from './esa-1/taskOne';
+import SolutionTwo from './esa-2/solution';
 import { TaskTwo } from './esa-2/taskTwo';
 import { TaskThree } from './esa-3/taskThree';
 import { useActiveEsaStore } from './hooks/useActiveEsaStore';
@@ -20,107 +20,30 @@ type DataComponentsType = {
 
 export const GraphicalVisualizationTabs = () => {
     const activeValue: string = useActiveEsaStore((state) => state.activeEsa);
-    const [iteration, setIteration] = useState(0);
-    const [stop, setStop] = useState(false);
-    const [left, setLeft] = useState(true);
-
-    const iterate = () => {
-        if (left) {
-            if (iteration >= 360) {
-                setIteration(0);
-                return;
-            }
-            setIteration(iteration + 15);
-        } else {
-            if (iteration < 0) {
-                setIteration(345);
-                return;
-            }
-            setIteration(iteration - 15);
-        }
-    };
-
-    const keyDownHandler = (event: KeyboardEvent) => {
-        if (event.key === 'r') {
-            event.preventDefault();
-            setStop(true);
-            setLeft(false);
-            setTimeout(() => {
-                return null;
-            }, 200);
-            if (iteration >= 360 || iteration < 0) {
-                setIteration(345);
-            } else {
-                setIteration(iteration - 15);
-            }
-        }
-
-        if (event.key === 'l') {
-            event.preventDefault();
-            setStop(true);
-            setLeft(true);
-            setTimeout(() => {
-                return null;
-            }, 200);
-            if (iteration >= 360 || iteration <= 0) {
-                setIteration(15);
-            } else {
-                setIteration(iteration + 15);
-            }
-        }
-
-        if (event.key === 'a') {
-            event.preventDefault();
-            setStop(!stop);
-        }
-    };
 
     const dataComponents: DataComponentsType = {
         TaskOne: {
             task: <TaskOne />,
-            idea: '',
-            solution: <SolutionOne iteration={iteration} />,
+            idea: 'Hier ist noch nichts',
+            solution: <SolutionOne />,
             documentation: <DocumentationOne />,
-            comments: '',
+            comments: 'Hier ist noch nichts',
         },
         TaskTwo: {
             task: <TaskTwo />,
-            idea: '',
-            solution: '',
-            documentation: '',
-            comments: '',
+            idea: 'Hier ist noch nichts',
+            solution: <SolutionTwo />,
+            documentation: 'Hier ist noch nichts',
+            comments: 'Hier ist noch nichts',
         },
         TaskThree: {
             task: <TaskThree />,
-            idea: '',
-            solution: '',
-            documentation: '',
-            comments: '',
+            idea: 'Hier ist noch nichts',
+            solution: 'Hier ist noch nichts',
+            documentation: 'Hier ist noch nichts',
+            comments: 'Hier ist noch nichts',
         },
     };
-
-    useEffect(() => {
-        document.addEventListener('keydown', keyDownHandler);
-
-        if (iteration < 0) {
-            setIteration(345);
-        }
-
-        if (iteration >= 360) {
-            setIteration(0);
-        }
-        if (!stop) {
-            if (iteration >= 360) {
-                setIteration(0);
-            } else {
-                setTimeout(iterate, 100);
-            }
-        }
-
-        return () => {
-            document.removeEventListener('keydown', keyDownHandler);
-        };
-    }, [iteration, stop]);
 
     const data = [
         {
@@ -131,7 +54,7 @@ export const GraphicalVisualizationTabs = () => {
         {
             label: 'Idee',
             value: 'idea',
-            desc: `Hier ist leider nichts`,
+            desc: `Hier ist noch nichts`,
         },
         {
             label: 'Lösung',

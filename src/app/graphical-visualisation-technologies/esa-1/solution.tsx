@@ -1,13 +1,86 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Cat } from './cat';
 
-type SolutionsProps = {
-    iteration: number;
-};
+export const SolutionOne: FC = () => {
+    const [iteration, setIteration] = useState(0);
+    const [stop, setStop] = useState(false);
+    const [left, setLeft] = useState(true);
 
-export const SolutionOne: FC<SolutionsProps> = ({ iteration }) => {
+    const iterate = () => {
+        if (left) {
+            if (iteration >= 360) {
+                setIteration(0);
+                return;
+            }
+            setIteration(iteration + 15);
+        } else {
+            if (iteration < 0) {
+                setIteration(345);
+                return;
+            }
+            setIteration(iteration - 15);
+        }
+    };
+
+    const keyDownHandler = (event: KeyboardEvent) => {
+        if (event.key === 'r') {
+            event.preventDefault();
+            setStop(true);
+            setLeft(false);
+            setTimeout(() => {
+                return null;
+            }, 200);
+            if (iteration >= 360 || iteration < 0) {
+                setIteration(345);
+            } else {
+                setIteration(iteration - 15);
+            }
+        }
+
+        if (event.key === 'l') {
+            event.preventDefault();
+            setStop(true);
+            setLeft(true);
+            setTimeout(() => {
+                return null;
+            }, 200);
+            if (iteration >= 360 || iteration <= 0) {
+                setIteration(15);
+            } else {
+                setIteration(iteration + 15);
+            }
+        }
+
+        if (event.key === 'a') {
+            event.preventDefault();
+            setStop(!stop);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('keydown', keyDownHandler);
+
+        if (iteration < 0) {
+            setIteration(345);
+        }
+
+        if (iteration >= 360) {
+            setIteration(0);
+        }
+        if (!stop) {
+            if (iteration >= 360) {
+                setIteration(0);
+            } else {
+                setTimeout(iterate, 100);
+            }
+        }
+
+        return () => {
+            document.removeEventListener('keydown', keyDownHandler);
+        };
+    }, [iteration, stop]);
     return (
         <div className='grid grid-cols-2 gap-4'>
             <div>
