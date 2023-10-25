@@ -3,10 +3,10 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import { UnderlineTabs } from '../components/tabs';
-import { DocumentationOne } from './esa-1/documentation';
-import { SolutionOne } from './esa-1/solution';
+import { DocumentationOne } from './esa-1/documentationOne';
+import { SolutionOne } from './esa-1/solutionOne';
 import { TaskOne } from './esa-1/taskOne';
-import SolutionTwo from './esa-2/solution';
+import SolutionTwo from './esa-2/solutionTwo';
 import { TaskTwo } from './esa-2/taskTwo';
 import { TaskThree } from './esa-3/taskThree';
 import { useActiveEsaStore } from './hooks/useActiveEsaStore';
