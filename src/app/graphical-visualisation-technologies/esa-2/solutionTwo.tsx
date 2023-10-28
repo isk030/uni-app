@@ -12,7 +12,7 @@ const SolutionTwo: React.FC = () => {
             return;
         }
 
-        // Anzahl der Ecken im Polygon (zum Beispiel 35 für einen Stern)
+        // Anzahl der Ecken in der Geometrie
         const numEdges = 35;
 
         const vertices = new Float32Array(numEdges * 2);
@@ -44,7 +44,7 @@ const SolutionTwo: React.FC = () => {
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
-        // Erstellen und kompilieren Sie Shader
+        // Shadererstellung
         const vertexShader = gl.createShader(gl.VERTEX_SHADER);
         gl.shaderSource(vertexShader!, vertexShaderSource);
         gl.compileShader(vertexShader!);
@@ -53,19 +53,19 @@ const SolutionTwo: React.FC = () => {
         gl.shaderSource(fragmentShader!, fragmentShaderSource);
         gl.compileShader(fragmentShader!);
 
-        // Erstellen und verwenden Sie ein Shader-Programm
+        // Shader-Programm
         const shaderProgram = gl.createProgram();
         gl.attachShader(shaderProgram!, vertexShader!);
         gl.attachShader(shaderProgram!, fragmentShader!);
         gl.linkProgram(shaderProgram!);
         gl.useProgram(shaderProgram);
 
-        // Verknüpfen Sie das Vertex-Attribut "coordinates" mit dem Buffer
+        // Buffer connection
         const coord = gl.getAttribLocation(shaderProgram!, 'coordinates');
         gl.enableVertexAttribArray(coord);
         gl.vertexAttribPointer(coord, 2, gl.FLOAT, false, 0, 0);
 
-        // Zeichnen Sie das Polygon als Linien
+        // Geometrie zeichnen
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.drawArrays(gl.LINE_LOOP, 0, numEdges); // Polygon mit 35 Ecken als Linien

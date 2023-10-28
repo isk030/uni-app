@@ -6,6 +6,7 @@ import { UnderlineTabs } from '../components/tabs';
 import { DocumentationOne } from './esa-1/documentationOne';
 import { SolutionOne } from './esa-1/solutionOne';
 import { TaskOne } from './esa-1/taskOne';
+import { DocumentationTwo } from './esa-2/documentationTwo';
 import SolutionTwo from './esa-2/solutionTwo';
 import { TaskTwo } from './esa-2/taskTwo';
 import { TaskThree } from './esa-3/taskThree';
@@ -33,7 +34,7 @@ export const GraphicalVisualizationTabs = () => {
             task: <TaskTwo />,
             idea: 'Hier ist noch nichts',
             solution: <SolutionTwo />,
-            documentation: 'Hier ist noch nichts',
+            documentation: <DocumentationTwo />,
             comments: 'Hier ist noch nichts',
         },
         TaskThree: {

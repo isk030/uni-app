@@ -35,6 +35,7 @@ export const DocumentationOne: FC = () => {
                 useEffect Hook statt. Hier wird auch gewährleistet, dass nur
                 gültige Frames zur Anzeige herangezogen werden.
             </p>
+            <br />
             <div className='grid grid-cols-3 gap-1'>
                 <img src='./carbon.png' width='400' alt='' />
                 <img src='./carbon-3.png' width='350' alt='' />
