@@ -1,7 +1,7 @@
 'use client';
 import { FC } from 'react';
-import { LayoutGrid } from './components/layoutGrid';
-import { MultiLevelSidebar } from './components/multiLevelSidebar';
+import { LayoutGrid } from './common/components/layoutGrid';
+import { MultiLevelSidebar } from './common/components/multiLevelSidebar';
 
 const Home: FC = () => {
     return (

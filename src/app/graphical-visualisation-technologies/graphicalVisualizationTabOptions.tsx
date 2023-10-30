@@ -1,8 +1,8 @@
 import { Option, Select } from '@material-tailwind/react';
 import { FC, useEffect, useState } from 'react';
-import { useActiveEsaStore } from './hooks/useActiveEsaStore';
+import { useActiveEsaStore } from '../common/hooks/useActiveEsaStore';
 
-export const TabOptions: FC = () => {
+export const GraphicalVisualizationTabOptions: FC = () => {
     const [activeValue, setActiveValue] = useState('TaskOne');
     const storeValue = useActiveEsaStore((state) => state.setActiveEsa);
     useEffect(() => {

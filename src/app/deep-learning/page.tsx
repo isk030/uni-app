@@ -1,13 +1,14 @@
 'use client';
 import { FC } from 'react';
-import { LayoutGrid } from '../components/layoutGrid';
-import { MultiLevelSidebar } from '../components/multiLevelSidebar';
+import { LayoutGrid } from '../common/components/layoutGrid';
+import { MultiLevelSidebar } from '../common/components/multiLevelSidebar';
+import { DeepLearningTabs } from './deepLearningTabs';
 
 const DeepLearningLayout: FC = () => {
     return (
         <LayoutGrid
             navigation={<MultiLevelSidebar openSubs={2} />}
-            content={<h1>Under construction</h1>}
+            content={<DeepLearningTabs />}
             footer={<></>}
         ></LayoutGrid>
     );

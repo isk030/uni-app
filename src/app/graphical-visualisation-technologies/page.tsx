@@ -1,8 +1,8 @@
 'use client';
 import { FC } from 'react';
-import { LayoutGrid } from '../components/layoutGrid';
-import { MultiLevelSidebar } from '../components/multiLevelSidebar';
-import { GraphicalVisualizationTabs } from './tabs';
+import { LayoutGrid } from '../common/components/layoutGrid';
+import { MultiLevelSidebar } from '../common/components/multiLevelSidebar';
+import { GraphicalVisualizationTabs } from './graphicalVisualizationTabs';
 
 const GraphicalVisualisationTechnologiesLayout: FC = () => {
     return (
