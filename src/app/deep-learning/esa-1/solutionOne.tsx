@@ -1,44 +1,53 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable @next/next/no-img-element */
 import { PhotoIcon } from '@heroicons/react/24/outline';
-import { FC, useEffect, useState } from 'react';
-import Chart from './chart';
+import { FC, useState } from 'react';
+import { Chart } from './chart';
+import { ImageCard } from './imageCard';
+import useFetch from './useFetch';
 
 export const SolutionOne: FC = () => {
-    // const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [image, setImage] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
-    const [data, setData] = useState<Array<{ name: string; value: number }>>(
-        []
-    );
+    const { data, loading, fetchError } = useFetch('/api/dl');
 
-    const [isLoading, setLoading] = useState(true);
-
-    useEffect(() => {
-        void fetch('http://127.0.0.1:8000/')
-            .then((res) => res.json())
-            .then((data2: Array<{ name: string; value: number }>) => {
-                setData(data2);
-                setLoading(false);
-            });
-    }, []);
-
-    if (isLoading) {
-        return <div>Loading...</div>;
+    if (loading) {
+        return <div>Lade...</div>;
+    }
+    if (fetchError !== '') {
+        return <div>Ein Fehler ist aufgetreten.</div>;
     }
 
-    const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             const imageUrl = URL.createObjectURL(file);
-            // setSelectedImage(file);
+            setImage(file);
             setPreviewImage(imageUrl);
         }
     };
+    const handleImageUpload = async () => {
+        if (image) {
+            const formData = new FormData();
+            formData.append('image', image);
+
+            try {
+                const response = await fetch('/api/dl', {
+                    method: 'POST',
+                    body: formData,
+                });
+                if (!response.ok) {
+                    alert('Fehler beim Hochladen des Bildes.');
+                }
+            } catch (error) {
+                console.error('Fehler beim Hochladen des Bildes:', error);
+            }
+        }
+    };
+
     return (
         <div className='grid grid-cols-2 gap-4'>
-            <div>Hallo</div>
-
+            <div>
+                <ImageCard />
+            </div>
             <div>
                 <div className='col-span-full'>
                     <div className='mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10'>
@@ -49,6 +58,7 @@ export const SolutionOne: FC = () => {
                                     aria-hidden='true'
                                 />
                             ) : (
+                                // eslint-disable-next-line @next/next/no-img-element
                                 <img
                                     className='mx-auto max-h-64'
                                     src={previewImage}
@@ -63,10 +73,11 @@ export const SolutionOne: FC = () => {
                                     <span>Upload a file</span>
                                     <input
                                         id='file-upload'
-                                        name='file-upload'
                                         type='file'
+                                        name='image'
+                                        accept='.png, .jpg'
                                         className='sr-only max-height: 10%'
-                                        onChange={handleImageSelect}
+                                        onChange={handleImageChange}
                                     />
                                 </label>
                                 <p className='pl-1'>or drag and drop</p>
@@ -79,7 +90,9 @@ export const SolutionOne: FC = () => {
                     </div>
                 </div>
                 <div className='h-96'>
-                    <Chart data={data} />
+                    <button onClick={handleImageUpload}>Bild hochladen</button>
+
+                    <Chart data={data && data} />
                 </div>
             </div>
         </div>

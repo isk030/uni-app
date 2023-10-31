@@ -11,9 +11,9 @@ import {
     YAxis,
 } from 'recharts';
 
-type DataType = Array<{ name: string; value: number; fill?: string }>;
+export type DataType = Array<{ name: string; value: number; fill?: string }>;
 
-const Chart: FC<{ data: DataType }> = ({ data }) => {
+export const Chart: FC<{ data: DataType }> = ({ data }) => {
     return (
         <ResponsiveContainer width='100%' height='100%'>
             <BarChart data={data}>
@@ -32,5 +32,3 @@ const Chart: FC<{ data: DataType }> = ({ data }) => {
         </ResponsiveContainer>
     );
 };
-
-export default Chart;
