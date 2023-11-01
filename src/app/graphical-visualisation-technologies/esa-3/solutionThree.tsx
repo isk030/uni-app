@@ -1,4 +1,3 @@
-// Polygon.tsx
 import { useEffect, useRef } from 'react';
 
 function Polygon() {
@@ -13,17 +12,14 @@ function Polygon() {
             return;
         }
 
-        const vertices: number[] = [];
-        const numSides = 35;
-
-        for (let i = 0; i < numSides; i++) {
-            const angle = (i / numSides) * Math.PI * 2;
-            const radius = i % 2 === 0 ? 1 : 0.9; // Abwechselnde Radien für Zacken
-
-            const x = radius * Math.cos(angle);
-            const y = radius * Math.sin(angle);
-            vertices.push(x, y);
-        }
+        const vertices: number[] = [
+            -0.5, 0.5, -0.8, 1, -0.2, 0.5, -0.2, 0.5, 0.2, 0.5, 0.0, 0.0, 0.5,
+            0.5, 0.8, 1, 0.2, 0.5, 0.0, 0.0, 0.2, 0.5, 0.5, 0.5, 0.0, 0.0, -0.5,
+            0.5, -0.2, 0.5, 0.0, 0.0, 0.5, -0.5, 0.2, 0.0, 0.0, 0.0, -0.5, -0.5,
+            -0.2, 0.0, 0.5, -0.5, 0.0, -0.5, 0.2, -0.2, 0.0, -0.5, -0.5, -0.5,
+            -0.2, -0.2, 0.2, 0.0, 0.5, -0.1, 0.3, -0.2, -0.2, 0.0, -0.3, -0.2,
+            -0.5, -0.1,
+        ];
 
         const vertexBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -71,10 +67,10 @@ function Polygon() {
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.TRIANGLE_FAN, 0, numSides);
+        gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 2);
     }, []);
 
-    return <canvas ref={canvasRef} width={400} height={400} />;
+    return <canvas ref={canvasRef} width={800} height={800} />;
 }
 
 export default Polygon;
