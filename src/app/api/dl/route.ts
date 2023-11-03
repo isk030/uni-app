@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async () => {
-    const url = process.env.DL_API_BASE_URL + 'dl';
+    const url = process.env.DL_API_BASE_URL + 'api/dl';
     const res = await fetch(url);
     const data = (await res.json()) as Array<{ [key: string]: string }>;
 
@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
 
     try {
         const res: Response = await fetch(
-            process.env.DL_API_BASE_URL + 'uploadfile/',
+            process.env.DL_API_BASE_URL + 'api/uploadfile/',
             {
                 method: 'POST',
                 body: formData,

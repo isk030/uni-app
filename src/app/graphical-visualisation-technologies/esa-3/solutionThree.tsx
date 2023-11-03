@@ -62,7 +62,14 @@ function Polygon() {
         gl.useProgram(shaderProgram);
 
         const coord = gl.getAttribLocation(shaderProgram!, 'coordinates');
-        gl.vertexAttribPointer(coord, 2, gl.FLOAT, false, 2* Float32Array.BYTES_PER_ELEMENT, 0);
+        gl.vertexAttribPointer(
+            coord,
+            2,
+            gl.FLOAT,
+            false,
+            2 * Float32Array.BYTES_PER_ELEMENT,
+            0
+        );
         gl.enableVertexAttribArray(coord);
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
