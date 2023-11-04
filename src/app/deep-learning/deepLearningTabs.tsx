@@ -13,6 +13,7 @@ import SolutionThree from '../graphical-visualisation-technologies/esa-3/solutio
 import { TaskThree } from '../graphical-visualisation-technologies/esa-3/taskThree';
 import { DeepLearningTabOptions } from './deepLearningTabOptions';
 import { DocumentationOne } from './esa-1/documentationOne';
+import { IdeaOne } from './esa-1/ideaOne';
 import { SolutionOne } from './esa-1/solutionOne';
 import { TaskOne } from './esa-1/taskOne';
 
@@ -28,7 +29,7 @@ export const DeepLearningTabs = () => {
     const dataComponents: DataComponentsType = {
         TaskOne: {
             task: <TaskOne />,
-            idea: 'Hier ist noch nichts',
+            idea: <IdeaOne />,
             solution: <SolutionOne />,
             documentation: <DocumentationOne />,
             comments: 'Hier ist noch nichts',
@@ -58,7 +59,7 @@ export const DeepLearningTabs = () => {
         {
             label: 'Idee',
             value: 'idea',
-            desc: `Hier ist noch nichts`,
+            desc: dataComponents[activeValue]?.idea,
         },
         {
             label: 'Lösung',

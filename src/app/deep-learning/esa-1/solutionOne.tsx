@@ -6,7 +6,13 @@ import {
     HandThumbUpIcon,
     PhotoIcon,
 } from '@heroicons/react/24/solid';
-import { Button, Card, CardBody, CardHeader } from '@material-tailwind/react';
+import {
+    Button,
+    Card,
+    CardBody,
+    CardHeader,
+    Spinner,
+} from '@material-tailwind/react';
 import { FC, useEffect, useState } from 'react';
 import { Chart } from './chart';
 
@@ -19,6 +25,7 @@ export const SolutionOne: FC = () => {
     const [images, setImages] = useState<{ url: string; confident: boolean }[]>(
         []
     );
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchBase64Image = async () => {
@@ -58,16 +65,19 @@ export const SolutionOne: FC = () => {
     }, []);
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setVarData([]);
         const file = event.target.files?.[0];
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setImage(file);
+
             setPreviewImage(imageUrl);
         }
     };
 
     const handleImageUpload = async () => {
         const formData = new FormData();
+        setLoading(true);
         if (image) {
             formData.append('image', image);
 
@@ -84,8 +94,9 @@ export const SolutionOne: FC = () => {
                     name: string;
                     value: number;
                 }>;
-                window.console.log('res', res);
+
                 setVarData(res);
+                setLoading(false);
             } catch (error) {
                 console.error('Fehler beim Hochladen des Bildes:', error);
             }
@@ -112,6 +123,7 @@ export const SolutionOne: FC = () => {
                                         );
                                         setImage(myFile);
                                     });
+                                setVarData([]);
                             }}
                         >
                             <CardHeader floated={false}>
@@ -146,7 +158,7 @@ export const SolutionOne: FC = () => {
                             ) : (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img
-                                    className='mx-auto max-h-64'
+                                    className='mx-auto max-h-32'
                                     src={previewImage}
                                     alt=''
                                 />
@@ -166,7 +178,6 @@ export const SolutionOne: FC = () => {
                                         onChange={handleImageChange}
                                     />
                                 </label>
-                                <p className='pl-1'>or drag and drop</p>
                             </div>
 
                             <p className='text-xs leading-5 text-gray-600'>
@@ -180,7 +191,7 @@ export const SolutionOne: FC = () => {
                         variant='gradient'
                         className='flex  gap-3'
                         onClick={handleImageUpload}
-                        disabled={!previewImage}
+                        disabled={!previewImage || loading}
                     >
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -203,16 +214,31 @@ export const SolutionOne: FC = () => {
                     {varData.length ? (
                         <>
                             <p>
-                                Stärkste Klasse: {varData[0]?.name}, Confidence:{' '}
-                                {varData[0]?.value}
+                                <span className='text-orange-500'>
+                                    Beste Klasse
+                                </span>
+                                : {varData[0]?.name};{' '}
+                                <span className='text-blue-500'>
+                                    Confidence
+                                </span>
+                                : {varData[0]?.value}
                             </p>
+                            <p>Classification by resnet101 Model</p>
                         </>
                     ) : (
                         <></>
                     )}
                 </div>
                 <div className='h-96 col-span-full w-full'>
-                    {varData.length ? <Chart data={varData} /> : <></>}
+                    {varData.length !== 0 ? (
+                        <Chart data={varData} />
+                    ) : loading ? (
+                        <div>
+                            <Spinner className='h-12 w-12 mx-auto' />
+                        </div>
+                    ) : (
+                        <></>
+                    )}
                 </div>
             </div>
         </div>
