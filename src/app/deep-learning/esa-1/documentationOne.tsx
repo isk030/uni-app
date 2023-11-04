@@ -15,12 +15,15 @@ export const DocumentationOne = () => {
                 unterstützt. Nach einer kurzen Recherche in Foren und
                 Fachartikeln wurde MobileNet V2 als ein gutes Model vorgestellt.
                 Ich habe daraufhin das Model in meinen ersten Ausführungen mit
-                einigen unterschiedlichen Bilder ausprobiert. Dann stieß ich auf
-                ResNet ein vortrainiertes Model auf der ML Platform Huggingface.
-                Dieses Model war populär und gut bewertet. Nach ein paar
-                Ausführungen auch mit diesem Model, erachtete ich es als etwas
-                besser und entschied mich letztlich dafür. Im weiteren Schritt
-                wird das Model in den Evaluierungsmodus gesetzt und der "output"
+                einigen unterschiedlichen Bildern ausprobiert. Dann stieß ich
+                auf ResNet ein vortrainiertes Model auf der ML Platform
+                Huggingface. Dieses Model ist populär und gut bewertet. Nach ein
+                paar Ausführungen auch mit diesem Model, erachtete ich es als
+                etwas besser und entschied mich letztlich dafür. Nachdem das
+                Bild im "Preprocessing" angepasst wird hinsichtlich Größe,
+                Gewichtung, Ausschnitt des zentralen Bildbereichts, ist das Bild
+                bereit für die Klassifizierung. Im weiteren Schritt wird das das
+                Model in den Evaluierungsmodus gesetzt und der "output"
                 entnommen, nachdem das Bild übergeben wurde. Ferner werden die
                 Ergebnisse mit einer Klassenbezeichnungsdatei abgeglichen und
                 bezeichnet. Im letzten Schritt werden die Ergebnisse absteigend
@@ -34,20 +37,20 @@ export const DocumentationOne = () => {
                 **Resultate**: Meine Resultate zeigen, sehr gute
                 Klassifikationsperformance, bei Objekten die zentral im Bild
                 wesentliche Indentifikationsmerkmale haben. Wenn es zu viele
-                Objekte gibt tut sich das Model schwer eindeutige Ergebnisse zu
-                liefern. Nur wenn das Bild zentral soweit geschnitten, wird
-                sodass die Anzahl der Objekte bedeutend gesenkt werden können,
-                sind bessere und richtige Ergebnisse möglich.
+                Objekte gibt, tut sich das Model schwer eindeutige Ergebnisse zu
+                liefern. Nur wenn das Bild zentral soweit geschnitten wird
+                sodass die Anzahl der Objekte bedeutend gesenkt wird, sind
+                bessere und richtige Ergebnisse möglich.
             </ReactMarkdown>
             <br />
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 **Hinweis**: Sicher könnte man die Performance des Models weiter
-                verbessern. Man könnte z.B das Model öfter Evaluiren lassen und
-                die Ergebnisse programmatisch bewerten und den Ausschnitt des
-                Bildes anpassen. Man könnte Filter und Masken einsetzen etc. Und
-                sich so inkrementell einer besseren Confidence nähern.
-                Allerdings fand ich mit der geg. Konfiguration des Modells, die
-                Klassifierzierungen recht gut und erfolgreich. Es war teils
+                verbessern. Man könnte z.B das Model öfter Evaluieren lassen und
+                die Ergebnisse rekursiv bewerten und den Ausschnitt des Bildes
+                anpassen. Man könnte Filter und Masken einsetzen etc. und sich
+                so inkrementell einer besseren Confidence nähern. Allerdings
+                fand ich mit der geg. Konfiguration des Models, die
+                Klassifizierungen recht gut und erfolgreich. Es war teils
                 herausfordernd negativ Beispiele zu finden.
             </ReactMarkdown>
             <br />

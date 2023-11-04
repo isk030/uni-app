@@ -25,12 +25,19 @@ export const IdeaOne = () => {
                 Semesterdokumentation des Autors. Diese App kommuniziert mit
                 einem separaten Server (ML Server), welche das API Framework
                 FastAPI nutzt, um Deeplearning Algorithmen und Model in Python
-                auszuführen. Beide Systeme sind auf Intanzen des Cloudanbieters
+                auszuführen. Beide Systeme sind auf Instanzen des Cloudanbieters
                 Railway deployed. Zusätzliches Motiv hierzu war, dass ich meine
-                Fähigkeiten als Softwareentwickler verfeinere mit Tools mit
+                Fähigkeiten als Softwareentwickler mit Tools verfeinere mit
                 denen ich nicht soviel Erfahrung habe, allerdings schon immer
                 interessiert war. ([Link zu Nextjs](https://nextjs.org/), [Link
                 zu FastAPI](https://fastapi.tiangolo.com/))
+            </ReactMarkdown>
+            <br />
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                **Hinweis**: **Da ich eine serverless Architektur gewählt habe,
+                sind "Kaltstarts" möglich. Also beim erstmaligen Laden der
+                Bilder und der Klassifikation, kann es sein, dass es längere
+                Ladezeiten gibt.**
             </ReactMarkdown>
             <br />
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -51,8 +58,12 @@ export const IdeaOne = () => {
                 persönlich als minimalistisch, funktional und kompatibel mit
                 meinem restlichen Stack. Das visuelle Design der App ist mit
                 Tailwind CSS und der Material-Tailwind Bibliothek entwickelt
-                worden. ([Link zu reCharts](https://recharts.org/)) ([Link zu
-                Tailwind CSS](https://tailwindcss.com/))
+                worden. Logos und Symbole stammen von Heroicons und Font-Awesome
+                ([Link zu reCharts](https://recharts.org/)) ([Link zu Tailwind
+                CSS](https://tailwindcss.com/)) ([Link zu
+                Material-Tailwind](https://material-tailwind.com/)) ([Link zu
+                Heroicons](https://heroicons.com/)) ([Link zu
+                Font-Awesome](https://fontawesome.com/))
             </ReactMarkdown>
             <br />
             <img className='mx-auto' src='arch.png' width={600}></img>
