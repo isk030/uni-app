@@ -1,22 +1,61 @@
-import { PhotoIcon } from '@heroicons/react/24/outline';
-import { Button } from '@material-tailwind/react';
-import { FC, useState } from 'react';
-import { Chart, DataType } from './chart';
-import { ImageCard } from './imageCard';
-import useFetch from './useFetch';
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @next/next/no-img-element */
+'use client';
+import {
+    HandThumbDownIcon,
+    HandThumbUpIcon,
+    PhotoIcon,
+} from '@heroicons/react/24/solid';
+import { Button, Card, CardBody, CardHeader } from '@material-tailwind/react';
+import { FC, useEffect, useState } from 'react';
+import { Chart } from './chart';
 
 export const SolutionOne: FC = () => {
     const [image, setImage] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
-    const { data, loading, fetchError } = useFetch('/api/dl');
-    const [varData, setVarData] = useState(data);
+    const [varData, setVarData] = useState<
+        Array<{ name: string; value: number }>
+    >([]);
+    const [images, setImages] = useState<{ url: string; confident: boolean }[]>(
+        []
+    );
 
-    if (loading) {
-        return <div>Lade...</div>;
-    }
-    if (fetchError !== '') {
-        return <div>{fetchError}</div>;
-    }
+    useEffect(() => {
+        const fetchBase64Image = async () => {
+            try {
+                // Fetch the base64-encoded image from the server
+                const response = await fetch(
+                    process.env.DL_API_BASE_URL + 'get_images'
+                ); // Replace with the actual server endpoint
+
+                if (response.ok) {
+                    // Convert the response to a base64-encoded data URL
+                    const imageBase64 = (await response.json()) as Array<{
+                        confident: boolean;
+                        image: string;
+                    }>;
+
+                    for (const element of imageBase64) {
+                        const imageURL = `data:image/jpeg;base64,${element.image}`;
+                        const imageElement = {
+                            url: imageURL,
+                            confident: element.confident,
+                        };
+                        setImages((oldImages) => [...oldImages, imageElement]);
+                    }
+                } else {
+                    console.error(
+                        'Error fetching base64 image:',
+                        response.status
+                    );
+                }
+            } catch (error) {
+                console.error('Error fetching base64 image:', error);
+            }
+        };
+
+        void fetchBase64Image();
+    }, []);
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -26,9 +65,10 @@ export const SolutionOne: FC = () => {
             setPreviewImage(imageUrl);
         }
     };
+
     const handleImageUpload = async () => {
+        const formData = new FormData();
         if (image) {
-            const formData = new FormData();
             formData.append('image', image);
 
             try {
@@ -40,9 +80,12 @@ export const SolutionOne: FC = () => {
                     alert('Fehler beim Hochladen des Bildes.');
                 }
 
-                const res = (await response.json()) as DataType;
+                const res = (await response.json()) as Array<{
+                    name: string;
+                    value: number;
+                }>;
+                window.console.log('res', res);
                 setVarData(res);
-                window.console.log(res);
             } catch (error) {
                 console.error('Fehler beim Hochladen des Bildes:', error);
             }
@@ -51,8 +94,45 @@ export const SolutionOne: FC = () => {
 
     return (
         <div className='grid grid-cols-2 gap-4 '>
-            <div>
-                <ImageCard />
+            <div className='grid grid-cols-2 gap-4'>
+                {images?.map(({ url, confident }, index) => {
+                    return (
+                        <Card
+                            key={index}
+                            className='w-64 h-64'
+                            onClick={async () => {
+                                setPreviewImage(url);
+                                await fetch(url)
+                                    .then((res) => res.blob())
+                                    .then((myBlob) => {
+                                        const myFile = new File(
+                                            [myBlob],
+                                            'image.jpeg',
+                                            { type: myBlob.type }
+                                        );
+                                        setImage(myFile);
+                                    });
+                            }}
+                        >
+                            <CardHeader floated={false}>
+                                <img src={url} alt='profile-picture' />
+                            </CardHeader>
+                            <CardBody className='mx-auto h-90'>
+                                {confident ? (
+                                    <HandThumbUpIcon
+                                        className='text-green-500'
+                                        width={20}
+                                    />
+                                ) : (
+                                    <HandThumbDownIcon
+                                        className='text-red-500'
+                                        width={20}
+                                    />
+                                )}
+                            </CardBody>
+                        </Card>
+                    );
+                })}
             </div>
             <div className='grid grid-cols-1 gap-4'>
                 <div className='col-span-full'>
@@ -100,6 +180,7 @@ export const SolutionOne: FC = () => {
                         variant='gradient'
                         className='flex  gap-3'
                         onClick={handleImageUpload}
+                        disabled={!previewImage}
                     >
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -118,8 +199,20 @@ export const SolutionOne: FC = () => {
                         Classify Image
                     </Button>
                 </div>
-                <div className='h-96 col-span-full'>
-                    <Chart data={varData.length ? varData : data} />
+                <div className='col-span-full text-center'>
+                    {varData.length ? (
+                        <>
+                            <p>
+                                Stärkste Klasse: {varData[0]?.name}, Confidence:{' '}
+                                {varData[0]?.value}
+                            </p>
+                        </>
+                    ) : (
+                        <></>
+                    )}
+                </div>
+                <div className='h-96 col-span-full w-full'>
+                    {varData.length ? <Chart data={varData} /> : <></>}
                 </div>
             </div>
         </div>
