@@ -34,7 +34,7 @@ export const DocumentationOne = () => {
             </ReactMarkdown>
             <br />
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                **Resultate**: Meine Resultate zeigen, sehr gute
+                **Resultate**: Meine Resultate zeigen eine gute
                 Klassifikationsperformance, bei Objekten die zentral im Bild
                 wesentliche Indentifikationsmerkmale haben. Wenn es zu viele
                 Objekte gibt, tut sich das Model schwer eindeutige Ergebnisse zu
@@ -50,8 +50,7 @@ export const DocumentationOne = () => {
                 anpassen. Man könnte Filter und Masken einsetzen etc. und sich
                 so inkrementell einer besseren Confidence nähern. Allerdings
                 fand ich mit der geg. Konfiguration des Models, die
-                Klassifizierungen recht gut und erfolgreich. Es war teils
-                herausfordernd negativ Beispiele zu finden.
+                Klassifizierungen recht gut und erfolgreich.
             </ReactMarkdown>
             <br />
             <div className=' grid grid-cols-2 gap-1s'>
