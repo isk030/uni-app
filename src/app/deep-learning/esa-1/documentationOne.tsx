@@ -52,12 +52,12 @@ export const DocumentationOne = () => {
             </ReactMarkdown>
             <br />
             <div className=' grid grid-cols-2 gap-1s'>
-                <img className='mx-auto' src='ml_doc.png' width={400}></img>
-                <img className='mx-auto' src='ml_doc2.png' width={400}></img>
+                <img className='mx-auto' src='ml_doc.png' width={600}></img>
+                <img className='mx-auto' src='ml_doc2.png' width={600}></img>
                 <img
                     className='mx-auto mb-50'
                     src='ml_doc3.png'
-                    width={400}
+                    width={600}
                 ></img>
             </div>
         </div>

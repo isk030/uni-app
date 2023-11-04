@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -53,6 +54,8 @@ export const IdeaOne = () => {
                 worden. ([Link zu reCharts](https://recharts.org/)) ([Link zu
                 Tailwind CSS](https://tailwindcss.com/))
             </ReactMarkdown>
+            <br />
+            <img className='mx-auto' src='arch.png' width={600}></img>
         </>
     );
 };
