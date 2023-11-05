@@ -18,7 +18,11 @@ export const Chart: FC<{ data: DataType }> = ({ data }) => {
         <ResponsiveContainer width='100%' height='100%'>
             <BarChart data={data}>
                 <CartesianGrid />
-                <XAxis dataKey='name' />
+                <XAxis
+                    dataKey='name'
+                    type='category'
+                    interval={'preserveStart'}
+                />
                 <YAxis scale='sqrt' />
                 <Tooltip />
                 <Legend />
