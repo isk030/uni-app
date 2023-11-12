@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useRef } from 'react';
 
-export const Donut: React.FC = () => {
+export type FigureProps = {
+    gitterVisible: boolean;
+    areaVisible: boolean;
+};
+export const Donut: React.FC<FigureProps> = ({
+    gitterVisible,
+    areaVisible,
+}) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
@@ -82,8 +89,13 @@ export const Donut: React.FC = () => {
         gl.clearColor(0, 0, 0, 1);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         gl.viewport(0, 0, canvas.width, canvas.height);
-        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0); // Draw filled torus
-        gl.drawElements(gl.LINES, indices.length, gl.UNSIGNED_SHORT, 0); // Draw lines
+
+        if (areaVisible) {
+            gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+        }
+        if (gitterVisible) {
+            gl.drawElements(gl.LINE_LOOP, indices.length, gl.UNSIGNED_SHORT, 0);
+        }
 
         function createTorusVertices(
             latBands: number,
@@ -92,7 +104,7 @@ export const Donut: React.FC = () => {
             r: number
         ) {
             const vertices: number[] = [];
-            const colors: number[] = []; // Added for color information
+            const colors: number[] = [];
             const indices: number[] = [];
 
             for (let lat = 0; lat <= latBands; lat++) {
@@ -111,7 +123,6 @@ export const Donut: React.FC = () => {
 
                     vertices.push(x, y, z);
 
-                    // Color based on the theta and phi values
                     colors.push(
                         0.5 + 0.5 * Math.cos(theta),
                         0.5 + 0.5 * Math.sin(phi),
@@ -136,7 +147,7 @@ export const Donut: React.FC = () => {
                 indices: new Uint16Array(indices),
             };
         }
-    }, []);
+    }, [gitterVisible, areaVisible]);
 
     return <canvas ref={canvasRef} width={400} height={400} />;
 };

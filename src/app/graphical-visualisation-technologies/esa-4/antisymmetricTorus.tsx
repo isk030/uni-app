@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useRef } from 'react';
+import { FigureProps } from './donut';
 
-export const AntisymmetricTorus: React.FC = () => {
+export const AntisymmetricTorus: React.FC<FigureProps> = ({
+    gitterVisible,
+    areaVisible,
+}) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
@@ -14,7 +18,6 @@ export const AntisymmetricTorus: React.FC = () => {
             return;
         }
 
-        // Vertex Shader Source
         const vsSource = `
             attribute vec4 coordinates;
             attribute vec4 color;
@@ -25,7 +28,6 @@ export const AntisymmetricTorus: React.FC = () => {
             }
         `;
 
-        // Fragment Shader Source
         const fsSource = `
             varying lowp vec4 vColor;
             void main() {
@@ -33,29 +35,24 @@ export const AntisymmetricTorus: React.FC = () => {
             }
         `;
 
-        // Erstellen und Kompilieren des Vertex Shaders
         const vertexShader = gl.createShader(gl.VERTEX_SHADER);
         gl.shaderSource(vertexShader!, vsSource);
         gl.compileShader(vertexShader!);
 
-        // Erstellen und Kompilieren des Fragment Shaders
         const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
         gl.shaderSource(fragmentShader!, fsSource);
         gl.compileShader(fragmentShader!);
 
-        // Erstellen des Shader-Programms
         const shaderProgram = gl.createProgram();
         gl.attachShader(shaderProgram!, vertexShader!);
         gl.attachShader(shaderProgram!, fragmentShader!);
         gl.linkProgram(shaderProgram!);
         gl.useProgram(shaderProgram);
 
-        // Konstanten definieren
         const R = 0.7;
         const r = 0.1;
         const a = 1;
 
-        // Erzeugen der Vertices, Farben und Indices für den antisymmetrischen Torus
         const { vertices, colors, indices } = createAntisymmetricTorusVertices(
             30,
             30,
@@ -64,7 +61,6 @@ export const AntisymmetricTorus: React.FC = () => {
             a
         );
 
-        // Erstellen und Binden des Vertex Buffers
         const vertexBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
         gl.bufferData(
@@ -73,12 +69,10 @@ export const AntisymmetricTorus: React.FC = () => {
             gl.STATIC_DRAW
         );
 
-        // Verbinden des Vertex Buffers mit dem Shader-Programm
         const position = gl.getAttribLocation(shaderProgram!, 'coordinates');
         gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(position);
 
-        // Erstellen und Binden des Color Buffers
         const colorBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
         gl.bufferData(
@@ -87,12 +81,10 @@ export const AntisymmetricTorus: React.FC = () => {
             gl.STATIC_DRAW
         );
 
-        // Verbinden des Color Buffers mit dem Shader-Programm
         const colorLocation = gl.getAttribLocation(shaderProgram!, 'color');
         gl.enableVertexAttribArray(colorLocation);
         gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
 
-        // Erstellen und Binden des Index Buffers
         const indexBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
         gl.bufferData(
@@ -101,15 +93,16 @@ export const AntisymmetricTorus: React.FC = () => {
             gl.STATIC_DRAW
         );
 
-        // Rendering der Fläche
-        gl.clearColor(0, 0, 0, 1); // Schwarzer Hintergrund
+        gl.clearColor(0, 0, 0, 1);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         gl.viewport(0, 0, canvas.width, canvas.height);
 
-        // Zeichnen der Fläche mit Dreiecken
-        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
-        // Zeichnen der Linien
-        gl.drawElements(gl.LINE_LOOP, indices.length, gl.UNSIGNED_SHORT, 0);
+        if (areaVisible) {
+            gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+        }
+        if (gitterVisible) {
+            gl.drawElements(gl.LINE_LOOP, indices.length, gl.UNSIGNED_SHORT, 0);
+        }
 
         function createAntisymmetricTorusVertices(
             latBands: number,
@@ -119,7 +112,7 @@ export const AntisymmetricTorus: React.FC = () => {
             a: number
         ) {
             const vertices: number[] = [];
-            const colors: number[][] = []; // Farbarray
+            const colors: number[][] = [];
             const indices: number[] = [];
 
             for (let lat = 0; lat <= latBands; lat++) {
@@ -127,7 +120,6 @@ export const AntisymmetricTorus: React.FC = () => {
                 for (let long = 0; long <= longBands; long++) {
                     const v = (long / longBands) * 2 * Math.PI;
 
-                    // Berechnung der Koordinaten
                     const x =
                         (R + r * Math.cos(v) * (a + Math.sin(u))) * Math.cos(u);
                     const y =
@@ -135,7 +127,7 @@ export const AntisymmetricTorus: React.FC = () => {
                     const z = r * Math.sin(v) * (a + Math.sin(u));
 
                     vertices.push(x, y, z);
-                    // Farbverlauf
+
                     colors.push([
                         0.5 + 0.5 * Math.cos(u),
                         0.5 + 0.5 * Math.sin(v),
@@ -145,7 +137,6 @@ export const AntisymmetricTorus: React.FC = () => {
                 }
             }
 
-            // Indexberechnung
             for (let lat = 0; lat < latBands; lat++) {
                 for (let long = 0; long < longBands; long++) {
                     const first = lat * (longBands + 1) + long;
@@ -161,7 +152,7 @@ export const AntisymmetricTorus: React.FC = () => {
                 indices,
             };
         }
-    }, []);
+    }, [gitterVisible, areaVisible]);
 
     return <canvas ref={canvasRef} width='400' height='400' />;
 };

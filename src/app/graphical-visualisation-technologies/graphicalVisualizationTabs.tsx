@@ -13,7 +13,8 @@ import { TaskTwo } from './esa-2/taskTwo';
 import { DocumentationThree } from './esa-3/documentationThree';
 import SolutionThree from './esa-3/solutionThree';
 import { TaskThree } from './esa-3/taskThree';
-import Donut from './esa-4/solutionFour';
+import { DocumentationFour } from './esa-4/documentationFour';
+import SolutionFour from './esa-4/solutionFour';
 import { TaskFour } from './esa-4/taskFour';
 import { GraphicalVisualizationTabOptions } from './graphicalVisualizationTabOptions';
 
@@ -51,8 +52,8 @@ export const GraphicalVisualizationTabs = () => {
         TaskFour: {
             task: <TaskFour />,
             idea: 'Hier ist noch nichts',
-            solution: <Donut />,
-            documentation: <DocumentationThree />,
+            solution: <SolutionFour />,
+            documentation: <DocumentationFour/>,
             comments: 'Hier ist noch nichts',
         },
     };
