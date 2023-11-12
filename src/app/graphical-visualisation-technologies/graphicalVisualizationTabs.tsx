@@ -53,7 +53,7 @@ export const GraphicalVisualizationTabs = () => {
             task: <TaskFour />,
             idea: 'Hier ist noch nichts',
             solution: <SolutionFour />,
-            documentation: <DocumentationFour/>,
+            documentation: <DocumentationFour />,
             comments: 'Hier ist noch nichts',
         },
     };

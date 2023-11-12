@@ -11,13 +11,11 @@ const SolutionFour: React.FC = () => {
     return (
         <div className='grid grid-cols-3 gap-4'>
             <Donut gitterVisible={gitterVisible} areaVisible={areaVisible} />
-            <AntisymmetricTorus
-                gitterVisible={gitterVisible}
-                areaVisible={areaVisible}
-            />
-            <Horn gitterVisible={gitterVisible} areaVisible={areaVisible} />
-            <div></div>
             <div className='grid gap-4 mx-auto'>
+                <AntisymmetricTorus
+                    gitterVisible={gitterVisible}
+                    areaVisible={areaVisible}
+                />
                 <Button onClick={() => setGitterVisible(!gitterVisible)}>
                     Gitter umschalten
                 </Button>
@@ -25,7 +23,8 @@ const SolutionFour: React.FC = () => {
                     Fläche umschalten
                 </Button>
             </div>
-            <div></div>
+
+            <Horn gitterVisible={gitterVisible} areaVisible={areaVisible} />
         </div>
     );
 };
