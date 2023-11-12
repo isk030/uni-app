@@ -13,6 +13,8 @@ import { TaskTwo } from './esa-2/taskTwo';
 import { DocumentationThree } from './esa-3/documentationThree';
 import SolutionThree from './esa-3/solutionThree';
 import { TaskThree } from './esa-3/taskThree';
+import Donut from './esa-4/solutionFour';
+import { TaskFour } from './esa-4/taskFour';
 import { GraphicalVisualizationTabOptions } from './graphicalVisualizationTabOptions';
 
 type DataComponentsType = {
@@ -43,6 +45,13 @@ export const GraphicalVisualizationTabs = () => {
             task: <TaskThree />,
             idea: 'Hier ist noch nichts',
             solution: <SolutionThree />,
+            documentation: <DocumentationThree />,
+            comments: 'Hier ist noch nichts',
+        },
+        TaskFour: {
+            task: <TaskFour />,
+            idea: 'Hier ist noch nichts',
+            solution: <Donut />,
             documentation: <DocumentationThree />,
             comments: 'Hier ist noch nichts',
         },

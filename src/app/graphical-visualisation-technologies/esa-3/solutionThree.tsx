@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-function Polygon() {
+function SolutionThree() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
@@ -80,4 +80,4 @@ function Polygon() {
     return <canvas ref={canvasRef} width={800} height={800} />;
 }
 
-export default Polygon;
+export default SolutionThree;

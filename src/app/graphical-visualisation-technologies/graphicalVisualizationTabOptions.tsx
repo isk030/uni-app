@@ -23,6 +23,7 @@ export const GraphicalVisualizationTabOptions: FC = () => {
                 <Option value='TaskOne'>ESA 1</Option>
                 <Option value='TaskTwo'>ESA 2</Option>
                 <Option value='TaskThree'>ESA 3</Option>
+                <Option value='TaskFour'>ESA 4</Option>
             </Select>
         </div>
     );
