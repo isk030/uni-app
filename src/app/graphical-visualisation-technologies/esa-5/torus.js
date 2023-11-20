@@ -33,9 +33,9 @@ const torus = (function () {
                 let y = (R + r * Math.cos(u)) * Math.sin(v);
                 let z = r * Math.sin(u);
 
-                x += -1.5;
+                x += -2;
                 y += 0.5;
-                z += -1.5;
+                z += 0;
 
                 // Set vertex positions.
                 vertices[iVertex * 3] = x;

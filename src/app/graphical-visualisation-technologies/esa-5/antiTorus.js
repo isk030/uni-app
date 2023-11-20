@@ -34,9 +34,9 @@ const antiTorus = (function () {
                 let y = (R + r * Math.cos(v) * (a + Math.sin(u))) * Math.sin(u);
                 let z = r * Math.sin(v) * (a + Math.sin(u));
 
-                x += 1.5;
+                x += 2;
                 y += 0.5;
-                z += -1.5;
+                z += 0;
 
                 // Set vertex positions.
                 vertices[iVertex * 3] = x;
