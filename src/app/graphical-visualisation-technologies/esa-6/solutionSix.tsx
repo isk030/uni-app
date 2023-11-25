@@ -6,18 +6,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Slider } from '@material-tailwind/react';
 import React, { useEffect, useRef, useState } from 'react';
-import antiTorus from './antiTorus';
 import plane from './plane';
-import sphere from './sphere';
+import simple_sphere from './simple_sphere';
 import torus from './torus';
 
 const mat4 = require('gl-mat4');
+const mat3 = require('gl-mat3');
 
-export const SolutionFive: React.FC = () => {
+export const SolutionSix: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const [recursionlevel, setRecursionlevel] = useState<number>(0);
     const [camera, setCamera] = useState({
         // Initial position of the camera.
         eye: [0, 1, 4],
@@ -43,6 +41,8 @@ export const SolutionFive: React.FC = () => {
         // Distance in XZ-Plane from center when orbiting.
         distance: 4,
     });
+    const [animationActive, setAnimationActive] = useState(false);
+    const [animationTime, setAnimationTime] = useState(0);
 
     const keyDownHandler = (event: KeyboardEvent) => {
         const key = event.key;
@@ -58,13 +58,14 @@ export const SolutionFive: React.FC = () => {
                     ...prev,
                     zAngle: prev.zAngle - deltaRotate,
                 }));
-
+                setAnimationActive(false);
                 break;
             case 'ArrowRight':
                 setCamera((prev) => ({
                     ...prev,
                     zAngle: prev.zAngle + deltaRotate,
                 }));
+                setAnimationActive(false);
                 break;
             case 'n':
             case 'N':
@@ -73,6 +74,7 @@ export const SolutionFive: React.FC = () => {
                     ...prev,
                     fovy: camera.fovy + (sign * 5 * Math.PI) / 180,
                 }));
+                setAnimationActive(false);
                 break;
             case 'ArrowUp':
                 // Move camera up and down.
@@ -80,19 +82,32 @@ export const SolutionFive: React.FC = () => {
                     ...prev,
                     eye: [0, prev.eye[1] + deltaTranslate, 4],
                 }));
-
+                setAnimationActive(false);
                 break;
+            case 'k':
+            case 'K':
+                setAnimationActive(!animationActive);
+                break;
+
             case 'ArrowDown':
                 // Move camera up and down.
                 setCamera((prev) => ({
                     ...prev,
                     eye: [0, prev.eye[1] - deltaTranslate, 4],
                 }));
+                setAnimationActive(false);
                 break;
         }
     };
 
     useEffect(() => {
+        let intervalId: NodeJS.Timeout;
+        if (animationActive) {
+            intervalId = setTimeout(() => {
+                setAnimationTime((prev) => prev + 0.05);
+            }, 20);
+        }
+
         window.addEventListener(
             'keydown',
             function (e) {
@@ -120,7 +135,6 @@ export const SolutionFive: React.FC = () => {
             return;
         }
 
-        // Vertex Shader
         const vsSource = `
                 attribute vec3 aPosition;
                 attribute vec3 aNormal;
@@ -173,14 +187,24 @@ export const SolutionFive: React.FC = () => {
             );
         }
         const models = [];
-        function createModel(modelData, style, recursionArray) {
+        function createModel(
+            modelData,
+            style,
+            color,
+            translate,
+            rotate,
+            scale
+        ) {
             const model = {};
-            model.fillstyle = style;
-            if (recursionArray.length) {
-                modelData.createVertexData.apply(model, recursionArray);
-            } else {
-                modelData.createVertexData.apply(model);
+            if (color && translate && rotate && scale) {
+                model.color = color;
+                model.fillstyle = style;
+                model.translate = translate;
+                model.rotate = rotate;
+                model.scale = scale;
             }
+
+            modelData.createVertexData.apply(model);
 
             if (gl && model) {
                 // Setup position vertex buffer object.
@@ -228,15 +252,86 @@ export const SolutionFive: React.FC = () => {
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
             }
             // Create and initialize Model-View-Matrix.
+
+            // Create and initialize Model-Matrix.
+            model.mMatrix = mat4.create();
+
+            // Create and initialize Model-View-Matrix.
             model.mvMatrix = mat4.create();
+
+            // Create and initialize Normal-Matrix
+            model.nMatrix = mat3.create();
 
             models.push(model);
         }
+        // modelData, style, color, translate, rotate, scale;
+        createModel(
+            torus,
+            'fillwireframe',
+            [0.4, 0.85, 0.64, 1],
+            [0, 0, 0],
+            [0, 0 + animationTime, 0],
+            [1, 1, 1]
+        );
+        createModel(
+            plane,
+            'wireframe',
+            [0.4, 0.85, 0.64, 1],
+            [0, 0, 0],
+            [0, 0, 0],
+            [0.5, 0.5, 0.5]
+        );
+        createModel(
+            simple_sphere,
+            'fill',
+            [0.4, 0.85, 0.64, 1],
+            [
+                0,
+                1.4 * Math.cos(animationTime + Math.PI) + 1.4,
+                1.4 * Math.sin(animationTime + Math.PI),
+            ],
+            [0, 0, 0],
+            [0.1, 0.1, 0.1]
+        );
 
-        createModel(torus, 'fillwireframe', []);
-        createModel(plane, 'wireframe', []);
-        createModel(antiTorus, 'fillwireframe', []);
-        createModel(sphere, 'fillwireframe', [recursionlevel]);
+        createModel(
+            simple_sphere,
+            'fill',
+            [0.45, 0.77, 0.98, 1],
+            [
+                1.4 * Math.cos(animationTime - (2 * Math.PI) / 2),
+                1.4 * Math.sin(animationTime - (2 * Math.PI) / 2) - 1.4,
+                0,
+            ],
+            [0, 0, 0],
+            [0.1, 0.1, 0.1]
+        );
+
+        createModel(
+            simple_sphere,
+            'fill',
+            [0.45, 0.77, 0.98, 1],
+            [
+                0,
+                1.4 * Math.cos(animationTime + Math.PI) - 1.4,
+                -1.4 * Math.sin(animationTime + Math.PI),
+            ],
+            [0, 0, 0],
+            [0.1, 0.1, 0.1]
+        );
+
+        createModel(
+            simple_sphere,
+            'fill',
+            [0.45, 0.77, 0.98, 1],
+            [
+                -1.4 * Math.cos(animationTime + (2 * Math.PI) / 2),
+                1.4 * Math.sin(animationTime + (2 * Math.PI) / 2) + 1.4,
+                0,
+            ],
+            [0, 0, 0],
+            [0.1, 0.1, 0.1]
+        );
 
         // Draw the torus
         gl.clearColor(0, 0, 0, 1);
@@ -323,17 +418,38 @@ export const SolutionFive: React.FC = () => {
 
         // Loop over models.
         for (let i = 0; i < models.length; i++) {
-            // Update modelview for model.
             mat4.copy(models[i].mvMatrix, camera.vMatrix);
+            // Use shortcut variables.
+            const mMatrix = models[i].mMatrix;
+            const mvMatrix = models[i].mvMatrix;
 
-            // Set uniforms for model.
+            // Reset matrices to identity.
+            mat4.identity(mMatrix);
+            mat4.identity(mvMatrix);
+
+            // Translate.
+            mat4.translate(mMatrix, mMatrix, models[i].translate);
+
+            // Rotate.
+            mat4.rotateX(mMatrix, mMatrix, models[i].rotate[0]);
+            mat4.rotateY(mMatrix, mMatrix, models[i].rotate[1]);
+            mat4.rotateZ(mMatrix, mMatrix, models[i].rotate[2]);
+
+            // Scale
+            mat4.scale(mMatrix, mMatrix, models[i].scale);
+
+            // Combine view and model matrix
+            // by matrix multiplication to mvMatrix.
+            mat4.multiply(mvMatrix, camera.vMatrix, mMatrix);
+
             gl.uniformMatrix4fv(
                 shaderProgram.mvMatrixUniform,
                 false,
                 models[i].mvMatrix
             );
 
-            // Setup position VBO.
+            gl.uniform4fv(shaderProgram.colorUniform, models[i].color);
+
             gl.bindBuffer(gl.ARRAY_BUFFER, models[i].vboPos);
             gl.vertexAttribPointer(
                 shaderProgram.positionAttrib,
@@ -391,24 +507,14 @@ export const SolutionFive: React.FC = () => {
         // }
         return () => {
             document.removeEventListener('keydown', keyDownHandler);
+            clearInterval(intervalId);
         };
-    }, [camera, recursionlevel, keyDownHandler]);
+    }, [camera, keyDownHandler, animationActive, animationTime]);
 
     return (
-        <div className='grid grid-cols-2 gap-4 justify-items-center'>
-            <canvas ref={canvasRef} width={800} height={800} />
-            <div className='w-96'>
-                <Slider
-                    className={'bg-gray-500'}
-                    value={(recursionlevel * 20).toString() || '0'}
-                    onChange={(event) =>
-                        setRecursionlevel(
-                            Math.round(Number(event.target.value) / 20)
-                        )
-                    }
-                />
-                <p>Rekursionstiefe: {recursionlevel} </p>
-                <br />
+        <div className='grid grid-cols-1 gap-4 justify-items-center'>
+            <div>
+                <canvas ref={canvasRef} width={1200} height={800} />
                 <p>Bedienung:</p>
                 <p>Pfeiltasten: Ansicht drehen</p>
                 <p>n/N: Rein- und Rauszoomen</p>
