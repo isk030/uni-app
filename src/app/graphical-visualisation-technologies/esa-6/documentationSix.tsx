@@ -7,20 +7,17 @@ export const DocumentationSix = () => {
     return (
         <>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                **Ansatz**: Ich habe bei dieser Aufgabe mich stark an dem
-                Kurs-Material orientiert. Ich habe zunächst das Camera-Setup
-                durchgeführt und daraufhin das Beispielmodel in meine Szene
-                geladen. Dann habe ich eines meiner Models, welches ich schon
-                bereits für ESA4 genutzt hatte an das 'createVertexData'
-                angepasst. Ähnliches gilt auch für die Sphere, die mittels
-                Rekursion unterteilt werden kann.
-            </ReactMarkdown>
-            <br />
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                **Hinweis**: Aufgrund der Nutzung des von mir gewählten
-                Frameworks, musste ich einiges an Code für meine App hier
-                anpassen. Dies war recht zeitintensiv, daher bin ich diesmal in
-                der Dokumentation etwas kürzer getreten.
+                **Ansatz**: Entsprechend der Kursmaterialien habe ich mit einer
+                Kugel zunächst experimentiert. Hierbei habe ich die Translation
+                und Rotation auch auf den Torus angewandt. Entsprechen konnte
+                ich iterativ mich an das vorliegende Ergebnis annähern. Es ist
+                immer wieder eine Herausforderung Animationen mit Webgl in
+                Einklang mit den Renderzyklen des React-Frameworks anzupassen.
+                Zurzeit wird bei jedem Renderzyklus mit einem setTimeout() die
+                Werte für Rotation Translation für die Objekte neuberechnet. Ich
+                kann mir vorstellen, das wiederkehrende Ergebnisse der
+                Berechnungen 'gechached' werden könnten, um ressourcensparender
+                zu animieren.
             </ReactMarkdown>
         </>
     );

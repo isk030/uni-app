@@ -287,8 +287,8 @@ export const SolutionSix: React.FC = () => {
             [0.4, 0.85, 0.64, 1],
             [
                 0,
-                1.4 * Math.cos(animationTime + Math.PI) + 1.4,
-                1.4 * Math.sin(animationTime + Math.PI),
+                1 * Math.cos(animationTime + Math.PI) + 1,
+                1 * Math.sin(animationTime + Math.PI),
             ],
             [0, 0, 0],
             [0.1, 0.1, 0.1]
@@ -299,8 +299,8 @@ export const SolutionSix: React.FC = () => {
             'fill',
             [0.45, 0.77, 0.98, 1],
             [
-                1.4 * Math.cos(animationTime - (2 * Math.PI) / 2),
-                1.4 * Math.sin(animationTime - (2 * Math.PI) / 2) - 1.4,
+                1 * Math.cos(animationTime - (2 * Math.PI) / 2),
+                1 * Math.sin(animationTime - (2 * Math.PI) / 2) - 1,
                 0,
             ],
             [0, 0, 0],
@@ -313,8 +313,8 @@ export const SolutionSix: React.FC = () => {
             [0.45, 0.77, 0.98, 1],
             [
                 0,
-                1.4 * Math.cos(animationTime + Math.PI) - 1.4,
-                -1.4 * Math.sin(animationTime + Math.PI),
+                1 * Math.cos(animationTime + Math.PI) - 1,
+                -1 * Math.sin(animationTime + Math.PI),
             ],
             [0, 0, 0],
             [0.1, 0.1, 0.1]
@@ -325,8 +325,8 @@ export const SolutionSix: React.FC = () => {
             'fill',
             [0.45, 0.77, 0.98, 1],
             [
-                -1.4 * Math.cos(animationTime + (2 * Math.PI) / 2),
-                1.4 * Math.sin(animationTime + (2 * Math.PI) / 2) + 1.4,
+                -1 * Math.cos(animationTime + (2 * Math.PI) / 2),
+                1 * Math.sin(animationTime + (2 * Math.PI) / 2) + 1,
                 0,
             ],
             [0, 0, 0],
@@ -514,8 +514,12 @@ export const SolutionSix: React.FC = () => {
     return (
         <div className='grid grid-cols-1 gap-4 justify-items-center'>
             <div>
-                <canvas ref={canvasRef} width={1200} height={800} />
+                <canvas ref={canvasRef} width={1200} height={600} />
                 <p>Bedienung:</p>
+                <p>
+                    k/K: Animieren umschalten: Wenn die Ansicht geändert wird
+                    hält die Animation an.
+                </p>
                 <p>Pfeiltasten: Ansicht drehen</p>
                 <p>n/N: Rein- und Rauszoomen</p>
             </div>
