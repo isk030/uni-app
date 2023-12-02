@@ -42,7 +42,7 @@ export const SolutionSeven: React.FC = () => {
         // Distance in XZ-Plane from center when orbiting.
         distance: 5,
     });
-    const [animationActive, setAnimationActive] = useState(false);
+    const [animationActive, setAnimationActive] = useState(true);
     const [animationTime, setAnimationTime] = useState(0);
 
     const keyDownHandler = (event: KeyboardEvent) => {
