@@ -7,7 +7,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useEffect, useRef, useState } from 'react';
+import horn from './horn';
 import plane from './plane';
+import simpleSphere from './simpleSphere';
 import torus from './torus';
 
 const mat4 = require('gl-mat4');
@@ -291,25 +293,33 @@ export const SolutionSeven: React.FC = () => {
         );
 
         createModel(
-            torus,
+            horn,
             'fillwireframe',
             [1, 1, 1, 1],
             [0, 0, -4],
-            [0, 0 + animationTime + 1, 0],
+            [0, 0, 0 + animationTime],
             [3, 3, 3]
         );
 
         createModel(
-            torus,
+            horn,
+            'fillwireframe',
+            [1, 1, 1, 1],
+            [4, 0, 1],
+            [2, 0, 0 + animationTime],
+            [1, 1, 1]
+        );
+        createModel(
+            horn,
             'fillwireframe',
             [1, 1, 1, 1],
             [-4, 0, -2],
-            [2, 0 + animationTime, 0],
+            [2, 0, 0 - animationTime],
             [1, 1, 1]
         );
 
         createModel(
-            torus,
+            simpleSphere,
             'fillwireframe',
             [1, 1, 1, 1],
             [4, 0, -2],
