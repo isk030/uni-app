@@ -340,7 +340,7 @@ export const SolutionSeven: React.FC = () => {
             'fillwireframe',
             [1, 1, 1, 1],
             [2, 1, 1],
-            [1, 0 + animationTime, 0],
+            [1 - animationTime, 0 - animationTime, 0],
             [1, 1, 1]
         );
         createModel(
