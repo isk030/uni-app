@@ -6,39 +6,63 @@ import {
     ButtonGroup,
     Card,
     CardBody,
+    Checkbox,
+    Spinner,
     Typography,
 } from '@material-tailwind/react';
 import { FC, useState } from 'react';
 import useFetch from '../esa-1/useFetch';
 import { Chart2 } from './chart';
 
-type BodyType = {
-    N: number;
-    noise_variance: number;
-    hidden_layer_option: Array<number>;
-    activation_funcs_combination: Array<string>;
-    lr: number;
-    optimizer_choice: string;
-    epoch: number;
-    regularization: number;
-};
-
 export const SolutionTwo: FC = () => {
     const [body, setBody] = useState({
-        N: 5,
+        N: 20,
         noise_variance: 0.1,
-        hidden_layer_option: [10, 10],
-        activation_funcs_combination: ['relu', 'elu'],
-        lr: 0.1,
+        hidden_layer_option: [10],
+        activation_funcs_combination: ['elu'],
+        lr: 0.01,
         optimizer_choice: 'SGD',
         epoch: 1000,
         regularization: 0.0001,
     });
+    const [underFit, setUnderFit] = useState({
+        N: 100,
+        noise_variance: 0.1,
+        hidden_layer_option: [10],
+        activation_funcs_combination: ['tanh'],
+        lr: 0.01,
+        optimizer_choice: 'SGD',
+        epoch: 1000,
+        regularization: 0.0001,
+    });
+    const [bestFit, setBestFit] = useState({
+        N: 500,
+        noise_variance: 0.1,
+        hidden_layer_option: [14, 14],
+        activation_funcs_combination: ['tanh', 'elu'],
+        lr: 0.001,
+        optimizer_choice: 'Adam',
+        epoch: 1000,
+        regularization: 0.0001,
+    });
+    const [overFit, setOverFit] = useState({
+        N: 20,
+        noise_variance: 0.1,
+        hidden_layer_option: [20, 20, 20, 20],
+        activation_funcs_combination: ['tanh', 'tanh', 'tanh', 'tanh'],
+        lr: 0.01,
+        optimizer_choice: 'Adam',
+        epoch: 1000,
+        regularization: 0.000000000000000001,
+    });
     const [chartData, setChartData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [secondLayer, setSecondLayer] = useState(false);
 
     const fetchModel = async () => {
         try {
             // Fetch the base64-encoded image from the server
+            setIsLoading(true);
             const response = await fetch(
                 process.env.DL_API_BASE_URL + 'api/dl/esa2/training',
                 {
@@ -53,13 +77,46 @@ export const SolutionTwo: FC = () => {
             if (response.ok) {
                 // Convert the response to a base64-encoded data URL
                 const data = (await response.json()) as unknown;
-                window.console.log(data);
+
                 setChartData(data as []);
             } else {
-                console.error('Error fetching base64 image:', response.status);
+                console.error('Error fetching:', response.status);
             }
         } catch (error) {
-            console.error('Error fetching base64 image:', error);
+            console.error('Error fetching :', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const fetchBiasedModel = async (model) => {
+        try {
+            // Fetch the base64-encoded image from the server
+            setIsLoading(true);
+            model['no'] = true;
+            const response = await fetch(
+                process.env.DL_API_BASE_URL + 'api/dl/esa2/training/no',
+                {
+                    method: 'POST', // Die Methode
+                    headers: {
+                        'Content-Type': 'application/json', // Der Content-Type Header ist wichtig, wenn Sie JSON senden
+                    },
+                    body: JSON.stringify(model),
+                } // Konvertieren der Daten in einen JSON-String
+            ); // Replace with the actual server endpoint
+
+            if (response.ok) {
+                // Convert the response to a base64-encoded data URL
+                const data = (await response.json()) as unknown;
+
+                setChartData(data as []);
+            } else {
+                console.error('Error fetching :', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -91,9 +148,36 @@ export const SolutionTwo: FC = () => {
                 />
                 <div className='grid grid-cols-3 gap-4 '>
                     <div className='justify-self-start'>
-                        Total Loss: {data && chartData.length === 0 && data[1]}
+                        Total Loss:{' '}
+                        {data && chartData.length === 0
+                            ? data[1]
+                            : chartData[1]}
                     </div>
-                    <Button onClick={fetchModel}>Trainieren</Button>
+                    <div className='flex gap-2 justify-center'>
+                        <Button disabled={isLoading} onClick={fetchModel}>
+                            Trainieren
+                        </Button>
+                        <div>
+                            {isLoading ? (
+                                <Spinner className='h-8 w-8 mt-1' />
+                            ) : (
+                                ' '
+                            )}
+                        </div>
+                    </div>
+                    <div className='flex justify-center'>
+                        <ButtonGroup>
+                            <Button onClick={() => fetchBiasedModel(underFit)}>
+                                Underfit
+                            </Button>
+                            <Button onClick={() => fetchBiasedModel(bestFit)}>
+                                Best Fit
+                            </Button>
+                            <Button onClick={() => fetchBiasedModel(overFit)}>
+                                Overfit
+                            </Button>
+                        </ButtonGroup>
+                    </div>
                 </div>
                 <div className='grid grid-cols-1 gap-4'>
                     <div className='grid grid-cols-6 gap-4 text-center'>
@@ -341,24 +425,6 @@ export const SolutionTwo: FC = () => {
                                     >
                                         20
                                     </Button>
-                                    <Button
-                                        onClick={() =>
-                                            setBody({
-                                                ...body,
-                                                hidden_layer_option: [
-                                                    50,
-                                                    body.hidden_layer_option[1],
-                                                ],
-                                            })
-                                        }
-                                        className={
-                                            body.hidden_layer_option[0] === 50
-                                                ? 'bg-gray-500'
-                                                : ''
-                                        }
-                                    >
-                                        50
-                                    </Button>
                                 </ButtonGroup>
                                 <Typography
                                     color='blue-gray'
@@ -459,13 +525,25 @@ export const SolutionTwo: FC = () => {
                         </Card>
                         <Card className='mt-6 w-full col-span-2 flex justify-items-center'>
                             <CardBody className='mx-auto '>
-                                <Typography
-                                    variant='h5'
-                                    color='blue-gray'
-                                    className='mb-2'
-                                >
-                                    Hidden Layer 2
-                                </Typography>
+                                <div className='flex gap-2 justify-center'>
+                                    <Typography
+                                        variant='h5'
+                                        color='blue-gray'
+                                        className='mb-2'
+                                    >
+                                        Hidden Layer 2
+                                    </Typography>
+                                    <div className='mb-6px'>
+                                        <Checkbox
+                                            defaultChecked={false}
+                                            onChange={() =>
+                                                setSecondLayer(!secondLayer)
+                                            }
+                                            crossOrigin={false}
+                                        />
+                                    </div>
+                                </div>
+
                                 <Typography color='blue-gray' className='mb-2'>
                                     Neuronen
                                 </Typography>
@@ -477,14 +555,21 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                hidden_layer_option: [
-                                                    body.hidden_layer_option[0],
-                                                    10,
-                                                ],
+                                                hidden_layer_option: secondLayer
+                                                    ? [
+                                                          body
+                                                              .hidden_layer_option[0],
+                                                          10,
+                                                      ]
+                                                    : [
+                                                          body
+                                                              .hidden_layer_option[0],
+                                                      ],
                                             })
                                         }
                                         className={
-                                            body.hidden_layer_option[1] === 10
+                                            body.hidden_layer_option[1] ===
+                                                10 && secondLayer
                                                 ? 'bg-gray-500'
                                                 : ''
                                         }
@@ -495,37 +580,26 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                hidden_layer_option: [
-                                                    body.hidden_layer_option[0],
-                                                    20,
-                                                ],
+                                                hidden_layer_option: secondLayer
+                                                    ? [
+                                                          body
+                                                              .hidden_layer_option[0],
+                                                          20,
+                                                      ]
+                                                    : [
+                                                          body
+                                                              .hidden_layer_option[0],
+                                                      ],
                                             })
                                         }
                                         className={
-                                            body.hidden_layer_option[1] === 20
+                                            body.hidden_layer_option[1] ===
+                                                20 && secondLayer
                                                 ? 'bg-gray-500'
                                                 : ''
                                         }
                                     >
                                         20
-                                    </Button>
-                                    <Button
-                                        onClick={() =>
-                                            setBody({
-                                                ...body,
-                                                hidden_layer_option: [
-                                                    body.hidden_layer_option[0],
-                                                    50,
-                                                ],
-                                            })
-                                        }
-                                        className={
-                                            body.hidden_layer_option[1] === 50
-                                                ? 'bg-gray-500'
-                                                : ''
-                                        }
-                                    >
-                                        50
                                     </Button>
                                 </ButtonGroup>
                                 <Typography
@@ -542,17 +616,23 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                activation_funcs_combination: [
-                                                    body
-                                                        .activation_funcs_combination[0],
-                                                    'relu',
-                                                ],
+                                                activation_funcs_combination:
+                                                    secondLayer
+                                                        ? [
+                                                              body
+                                                                  .activation_funcs_combination[0],
+                                                              'relu',
+                                                          ]
+                                                        : [
+                                                              body
+                                                                  .activation_funcs_combination[0],
+                                                          ],
                                             })
                                         }
                                         className={
                                             body
                                                 .activation_funcs_combination[1] ===
-                                            'relu'
+                                                'relu' && secondLayer
                                                 ? 'bg-gray-500'
                                                 : ''
                                         }
@@ -563,17 +643,23 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                activation_funcs_combination: [
-                                                    body
-                                                        .activation_funcs_combination[0],
-                                                    'sigmoid',
-                                                ],
+                                                activation_funcs_combination:
+                                                    secondLayer
+                                                        ? [
+                                                              body
+                                                                  .activation_funcs_combination[0],
+                                                              'sigmoid',
+                                                          ]
+                                                        : [
+                                                              body
+                                                                  .activation_funcs_combination[0],
+                                                          ],
                                             })
                                         }
                                         className={
                                             body
                                                 .activation_funcs_combination[1] ===
-                                            'sigmoid'
+                                                'sigmoid' && secondLayer
                                                 ? 'bg-gray-500'
                                                 : ''
                                         }
@@ -584,17 +670,23 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                activation_funcs_combination: [
-                                                    body
-                                                        .activation_funcs_combination[0],
-                                                    'tanh',
-                                                ],
+                                                activation_funcs_combination:
+                                                    secondLayer
+                                                        ? [
+                                                              body
+                                                                  .activation_funcs_combination[0],
+                                                              'tanh',
+                                                          ]
+                                                        : [
+                                                              body
+                                                                  .activation_funcs_combination[0],
+                                                          ],
                                             })
                                         }
                                         className={
                                             body
                                                 .activation_funcs_combination[1] ===
-                                            'tanh'
+                                                'tanh' && secondLayer
                                                 ? 'bg-gray-500'
                                                 : ''
                                         }
@@ -605,17 +697,23 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                activation_funcs_combination: [
-                                                    body
-                                                        .activation_funcs_combination[0],
-                                                    'elu',
-                                                ],
+                                                activation_funcs_combination:
+                                                    secondLayer
+                                                        ? [
+                                                              body
+                                                                  .activation_funcs_combination[0],
+                                                              'elu',
+                                                          ]
+                                                        : [
+                                                              body
+                                                                  .activation_funcs_combination[0],
+                                                          ],
                                             })
                                         }
                                         className={
                                             body
                                                 .activation_funcs_combination[1] ===
-                                            'elu'
+                                                'elu' && secondLayer
                                                 ? 'bg-gray-500'
                                                 : ''
                                         }

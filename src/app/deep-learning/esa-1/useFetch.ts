@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 
 interface FetchOptions {
@@ -27,7 +28,12 @@ function useFetch<T = unknown>(url: string, options: FetchOptions = {}) {
                     },
                 };
 
-                if (body && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+                if (
+                    body &&
+                    (method === 'POST' ||
+                        method === 'PUT' ||
+                        method === 'PATCH')
+                ) {
                     requestOptions.body = JSON.stringify(body);
                 }
 
@@ -37,7 +43,7 @@ function useFetch<T = unknown>(url: string, options: FetchOptions = {}) {
                     throw new Error(`Error: ${response.status}`);
                 }
 
-                const result = await response.json() as T;
+                const result = (await response.json()) as T;
                 setData(result);
             } catch (err) {
                 setError(err as string);
