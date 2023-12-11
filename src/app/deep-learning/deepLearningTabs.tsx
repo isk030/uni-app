@@ -5,17 +5,18 @@
 
 import { UnderlineTabs } from '../common/components/tabs';
 import { useActiveEsaStore } from '../common/hooks/useActiveEsaStore';
-import { DocumentationTwo } from '../graphical-visualisation-technologies/esa-2/documentationTwo';
-import SolutionTwo from '../graphical-visualisation-technologies/esa-2/solutionTwo';
-import { TaskTwo } from '../graphical-visualisation-technologies/esa-2/taskTwo';
 import { DocumentationThree } from '../graphical-visualisation-technologies/esa-3/documentationThree';
 import SolutionThree from '../graphical-visualisation-technologies/esa-3/solutionThree';
 import { TaskThree } from '../graphical-visualisation-technologies/esa-3/taskThree';
 import { DeepLearningTabOptions } from './deepLearningTabOptions';
+
 import { DocumentationOne } from './esa-1/documentationOne';
 import { IdeaOne } from './esa-1/ideaOne';
 import { SolutionOne } from './esa-1/solutionOne';
 import { TaskOne } from './esa-1/taskOne';
+import { DocumentationTwo } from './esa-2/documentationTwo';
+import { SolutionTwo } from './esa-2/solutionTwo';
+import { TaskTwo } from './esa-2/taskTwo';
 
 type DataComponentsType = {
     [key: string]: {
