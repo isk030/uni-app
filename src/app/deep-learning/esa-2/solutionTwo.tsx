@@ -396,10 +396,13 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                hidden_layer_option: [
-                                                    10,
-                                                    body.hidden_layer_option[1],
-                                                ],
+                                                hidden_layer_option: secondLayer
+                                                    ? [
+                                                          10,
+                                                          body
+                                                              .hidden_layer_option[1],
+                                                      ]
+                                                    : [10],
                                             })
                                         }
                                         className={
@@ -414,10 +417,13 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                hidden_layer_option: [
-                                                    20,
-                                                    body.hidden_layer_option[1],
-                                                ],
+                                                hidden_layer_option: secondLayer
+                                                    ? [
+                                                          20,
+                                                          body
+                                                              .hidden_layer_option[1],
+                                                      ]
+                                                    : [20],
                                             })
                                         }
                                         className={
@@ -443,11 +449,14 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                activation_funcs_combination: [
-                                                    'relu',
-                                                    body
-                                                        .activation_funcs_combination[1],
-                                                ],
+                                                activation_funcs_combination:
+                                                    secondLayer
+                                                        ? [
+                                                              'relu',
+                                                              body
+                                                                  .activation_funcs_combination[1],
+                                                          ]
+                                                        : ['relu'],
                                             })
                                         }
                                         className={
@@ -464,11 +473,14 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                activation_funcs_combination: [
-                                                    'sigmoid',
-                                                    body
-                                                        .activation_funcs_combination[1],
-                                                ],
+                                                activation_funcs_combination:
+                                                    secondLayer
+                                                        ? [
+                                                              'sigmoid',
+                                                              body
+                                                                  .activation_funcs_combination[1],
+                                                          ]
+                                                        : ['sigmoid'],
                                             })
                                         }
                                         className={
@@ -485,11 +497,14 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                activation_funcs_combination: [
-                                                    'tanh',
-                                                    body
-                                                        .activation_funcs_combination[1],
-                                                ],
+                                                activation_funcs_combination:
+                                                    secondLayer
+                                                        ? [
+                                                              'tanh',
+                                                              body
+                                                                  .activation_funcs_combination[1],
+                                                          ]
+                                                        : ['tanh'],
                                             })
                                         }
                                         className={
@@ -506,11 +521,14 @@ export const SolutionTwo: FC = () => {
                                         onClick={() =>
                                             setBody({
                                                 ...body,
-                                                activation_funcs_combination: [
-                                                    'elu',
-                                                    body
-                                                        .activation_funcs_combination[1],
-                                                ],
+                                                activation_funcs_combination:
+                                                    secondLayer
+                                                        ? [
+                                                              'elu',
+                                                              body
+                                                                  .activation_funcs_combination[1],
+                                                          ]
+                                                        : ['elu'],
                                             })
                                         }
                                         className={
