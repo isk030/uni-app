@@ -2,65 +2,127 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 'use client';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 export const DocumentationTwo = () => {
     return (
-        <div className='h-[90vh] overflow-scroll'>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                **Ansatz**: Nachdem ich mich für Pytorch als Deep Learning
-                Framework entschieden habe, fand ich in den Dokumentationen eine
-                Liste von Image Classification Models, die Pytorch von sich aus
-                unterstützt. Nach einer kurzen Recherche in Foren und
-                Fachartikeln wurde MobileNet V2 als ein gutes Model vorgestellt.
-                Ich habe daraufhin das Model in meinen ersten Ausführungen mit
-                einigen unterschiedlichen Bildern ausprobiert. Dann stieß ich
-                auf ResNet ein vortrainiertes Model auf der ML Platform
-                Huggingface. Dieses Model ist populär und gut bewertet. Nach ein
-                paar Ausführungen auch mit diesem Model, erachtete ich es als
-                etwas besser und entschied mich letztlich dafür. Nachdem das
-                Bild im "Preprocessing" angepasst wird hinsichtlich Größe,
-                Gewichtung, Ausschnitt des zentralen Bildbereichts, ist das Bild
-                bereit für die Klassifizierung. Im weiteren Schritt wird das das
-                Model in den Evaluierungsmodus gesetzt und der "output"
-                entnommen, nachdem das Bild übergeben wurde. Ferner werden die
-                Ergebnisse mit einer Klassenbezeichnungsdatei abgeglichen und
-                bezeichnet. Im letzten Schritt werden die Ergebnisse absteigend
-                sortiert und letzendlich die Top 10 als Endpoint der FasAPI der
-                Single Page Application zur Verfügung gestellt. ([Link zu
-                Pytorch/resNet101](https://pytorch.org/vision/main/models/generated/torchvision.models.resnet101.html))
-                ([Link zu IMAGENET](https://image-net.org))
-            </ReactMarkdown>
+        <div className='overflow-visible overflow-scroll h-[80vh]'>
+            <h1>
+                Projektdokumentation: Entwicklung eines
+                Feedforward-Neural-Networks zur Regression
+            </h1>
+            <p>
+                In diesem Projekt habe ich mich der Herausforderung gestellt,
+                eine reellwertige Funktion mit einem Feedforward-Neural-Network
+                (FNN) zu regressieren. Dabei kamen PyTorch, Next.js und FastAPI
+                zum Einsatz.
+            </p>
             <br />
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                **Resultate**: Meine Resultate zeigen eine gute
-                Klassifikationsperformance, bei Objekten die zentral im Bild
-                wesentliche Indentifikationsmerkmale haben. Wenn es zu viele
-                Objekte gibt, tut sich das Model schwer eindeutige Ergebnisse zu
-                liefern. Nur wenn das Bild zentral soweit geschnitten wird
-                sodass die Anzahl der Objekte bedeutend gesenkt wird, sind
-                bessere und richtige Ergebnisse möglich.
-            </ReactMarkdown>
+            <h2>Kernaspekte des Projekts</h2>
+            <ul>
+                <li>
+                    <strong>Algorithmische Konfiguration:</strong> Ein
+                    signifikanter Teil meiner Zeit floss in die Ermittlung
+                    optimaler Netzwerkkonfigurationen anhand algorithmischer
+                    Kombination der Netztwerkparameter. Die Komplexität und
+                    Dauer dieses Prozesses waren größer als zunächst angenommen,
+                    und einige Fehler erschwerten die Arbeit, sodass ich für die
+                    fortschreitenden Schritte weniger Zeit hatte.
+                </li>
+                <br />
+                <li>
+                    <strong>Manuelle Optimierung:</strong> Letztendlich führte
+                    das manuelle Testen und Anpassen der Netzwerkparameter zu
+                    stetigen Verbesserungen. Insbesondere die Kombination aus
+                    Batch-Normalization und linearen Layern erwies sich als
+                    effektiv, um das Modell zu optimieren.
+                </li>
+                <br />
+                <li>
+                    <strong>Weight Decay:</strong> Die Experimente mit
+                    L2-Regularisierung hatten einen unterschiedlichen Einfluss
+                    auf die Modellperformance, was mich dazu veranlasste,
+                    verschiedene Werte zu testen und zu evaluieren.
+                </li>
+            </ul>
             <br />
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                **Hinweis**: Sicher könnte man die Performance des Models weiter
-                verbessern. Man könnte z.B das Model öfter Evaluieren lassen und
-                die Ergebnisse rekursiv bewerten und den Ausschnitt des Bildes
-                anpassen. Man könnte Filter und Masken einsetzen etc. und sich
-                so inkrementell einer besseren Confidence nähern. Allerdings
-                fand ich mit der geg. Konfiguration des Models, die
-                Klassifizierungen recht gut und erfolgreich.
-            </ReactMarkdown>
+            <p>
+                Das bestmögliche Modell, das ich entwickelte, erzielte niedrige
+                Verlustwerte, was auf eine hohe Genauigkeit bei der
+                Datenanpassung hindeutet.
+                <ul>
+                    <li>
+                        <strong>Bias:</strong> Durch die Feinjustierung der
+                        Modellarchitektur konnte ich den Bias reduzieren.
+                    </li>
+                    <p>
+                        <strong>Beschreibung:</strong> Fehler durch
+                        vereinfachende Annahmen im Lernalgorithmus. Ein hoher
+                        Bias führt oft zu Underfitting
+                    </p>
+                    <p>
+                        <strong>Auswirkung im Projekt:</strong> Anfangs
+                        möglicherweise hoher Bias, da das FNN-Modell zu simpel
+                        war, um die Funktion y(x) richtig abzubilden.
+                    </p>
+                    <br />
+                    <li>
+                        <strong>Variance:</strong> Das Ausbalancieren des
+                        Modells war entscheidend, um Overfitting zu vermeiden
+                    </li>
+                    <p>
+                        <strong>Beschreibung:</strong> Fehler durch
+                        Überanpassung an Trainingsdaten. Eine hohe Variance
+                        führt zu Overfitting,
+                    </p>
+                    <p>
+                        <strong>Auswirkung im Projekt:</strong> Mit zunehmender
+                        Modellkomplexität stieg möglicherweise die Variance, was
+                        zu einer guten Performance auf Trainingsdaten, aber
+                        schlechter Generalisierung führte.
+                    </p>
+                </ul>
+            </p>
             <br />
+            <p>Ergebnisse sind unter dem Tab Lösungen ersichtlich.</p>
+            <br />
+            <ul>
+                <li>
+                    Zu beobachten war, wie sich Overfitting und Underfitting in
+                    Abhängigkeit von der Netzwerkkonfiguration verhalten.
+                </li>
+                <li>
+                    Die Integration von Batch-Normalization-Layern trug hierbei
+                    wesentlich zur Stabilisierung des Trainingsprozesses bei.
+                </li>
+            </ul>
+            <br />
+
+            <br />
+            <h1>Technologieübersicht</h1>
+            <br />
+            <div>
+                <div>
+                    <h2>PyTorch</h2>
+                    <strong> Link:</strong>{' '}
+                    <a href='https://pytorch.org/docs/stable/index.html'>
+                        PyTorch offizielle Dokumentation
+                    </a>
+                </div>
+                <br />
+                <div>
+                    <h2>NumPy</h2>
+
+                    <p>
+                        <strong>Link:</strong>{' '}
+                        <a href='https://numpy.org/doc/stable/'>
+                            NumPy offizielle Dokumentation
+                        </a>
+                    </p>
+                </div>
+            </div>
             <div className=' grid grid-cols-2 gap-1s'>
-                <img className='mx-auto' src='ml_doc.png' width={600}></img>
-                <img className='mx-auto' src='ml_doc2.png' width={600}></img>
-                <img
-                    className='mx-auto mb-50'
-                    src='ml_doc3.png'
-                    width={600}
-                ></img>
+                <img className='mx-auto' src='esa-2-doc.png' width={600}></img>
+                <img className='mx-auto' src='esa-2-doc2.png' width={600}></img>
             </div>
         </div>
     );
