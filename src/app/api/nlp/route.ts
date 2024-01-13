@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { NextRequest, NextResponse } from 'next/server';
 
-
 export const POST = async (req: NextRequest) => {
     try {
         const res: Response = await fetch(
@@ -11,12 +10,12 @@ export const POST = async (req: NextRequest) => {
                 method: 'POST',
                 body: JSON.stringify(req.body),
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                },
             }
-        )
+        );
 
-        const data = await res.json() as string
+        const data = (await res.json()) as string;
 
         if (res.status !== 200) {
             return NextResponse.json(
@@ -25,8 +24,8 @@ export const POST = async (req: NextRequest) => {
             );
         }
 
-        return Response.json(data)
+        return Response.json(data);
     } catch (error) {
         return NextResponse.json({ Message: 'Failed', status: 500 });
     }
-}
+};
