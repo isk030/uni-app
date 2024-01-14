@@ -15,7 +15,7 @@ export const Chart2: FC<{
     data: Array<{ name: string; probability: number }>;
     red: boolean;
 }> = ({ data, red }) => {
-    // const data = [
+    // const data = [ s
     //     {
     //         name: 'Page A',
     //         uv: 4000,
