@@ -5,7 +5,6 @@
 
 import { UnderlineTabs } from '../common/components/tabs';
 import { useActiveEsaStore } from '../common/hooks/useActiveEsaStore';
-import { DocumentationThree } from '../graphical-visualisation-technologies/esa-3/documentationThree';
 import { DeepLearningTabOptions } from './deepLearningTabOptions';
 
 import { DocumentationOne } from './esa-1/documentationOne';
@@ -15,6 +14,7 @@ import { TaskOne } from './esa-1/taskOne';
 import { DocumentationTwo } from './esa-2/documentationTwo';
 import { SolutionTwo } from './esa-2/solutionTwo';
 import { TaskTwo } from './esa-2/taskTwo';
+import { DocumentationThree } from './esa-3/documentationThree';
 import { SolutionThree } from './esa-3/solutionThree';
 import { TaskThree } from './esa-3/taskThree';
 
@@ -57,11 +57,11 @@ export const DeepLearningTabs = () => {
             value: 'task',
             desc: dataComponents[activeValue]?.task,
         },
-        {
-            label: 'Idee',
-            value: 'idea',
-            desc: dataComponents[activeValue]?.idea,
-        },
+        // {
+        //     label: 'Idee',
+        //     value: 'idea',
+        //     desc: dataComponents[activeValue]?.idea,
+        // },
         {
             label: 'Lösung',
             value: 'solution',
@@ -72,11 +72,11 @@ export const DeepLearningTabs = () => {
             value: 'documentation',
             desc: dataComponents[activeValue]?.documentation,
         },
-        {
-            label: 'Kommentare',
-            value: 'comments',
-            desc: `Hier ist noch nichts`,
-        },
+        // {
+        //     label: 'Kommentare',
+        //     value: 'comments',
+        //     desc: `Hier ist noch nichts`,
+        // },
     ];
 
     return (

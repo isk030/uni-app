@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
-module.exports = {
+
+const withMT = require('@material-tailwind/react/utils/withMT');
+
+module.exports = withMT({
     content: [
         './app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
         './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -29,4 +32,4 @@ module.exports = {
         require('@tailwindcss/typography'),
         require('@tailwindcss/forms'),
     ],
-};
+});

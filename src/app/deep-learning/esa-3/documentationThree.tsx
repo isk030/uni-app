@@ -6,123 +6,91 @@
 export const DocumentationThree = () => {
     return (
         <div className='overflow-visible overflow-scroll h-[80vh]'>
+            <h1>Einführung und Hintergrund</h1>
+            <p>
+                In diesem Projekt habe ich mich mit der Entwicklung von Modellen
+                zur Wortvorhersage beschäftigt, indem ich sowohl ein Recurrent
+                Neural Network (RNN) als auch ein Feed-Forward Neural Network
+                (FFNN) trainiert habe. Die verwendeten Trainingsdaten stammen
+                aus dem Buch „Effie Briest“ von Theodor Fontane, einem
+                klassischen Werk der deutschen Literatur.
+            </p>
+            <br />
+            <h2>Experimentieren mit der Netzwerkarchitektur</h2>
+            <br />
+            <p>
+                Finale Architektur des LSTM-Modells: Embedding-Schicht (100
+                Dimensionen): Dient zur Vektorisierung der Worte und bildet die
+                Basis des Modells.
+            </p>
+
+            <p>
+                LSTM-Schicht (256 Einheiten, 30% Dropout): Gewählt aufgrund
+                ihrer Fähigkeit, Langzeitabhängigkeiten in Sequenzen zu
+                erfassen.
+            </p>
+
+            <p>
+                Dense-Ausgabeschicht (Softmax-Aktivierung): Generiert eine
+                Wahrscheinlichkeitsverteilung über das Vokabular.{' '}
+            </p>
+
+            <p>
+                Finale Architektur des FFNN-Modells: Embedding-Schicht:
+                Identisch zum LSTM-Modell, um Konsistenz zu wahren.
+            </p>
+
+            <p>
+                Flatten-Schicht: Transformiert die sequentiellen Daten in einen
+                flachen Vektor.
+            </p>
+
+            <p>
+                Dense-Schichten (512 Einheiten, ReLU-Aktivierung): Ausreichend
+                dimensioniert, um die Komplexität des Textes zu erfassen.
+            </p>
+            <br />
+            <h2>Ergebnisse der Wortvorhersage</h2>
+            <p>
+                Die Experimente haben gezeigt, dass die Vorhersagegenauigkeit
+                (k=1) beim LSTM-Modell höher war als beim FFNN. Dies spiegelt
+                sich auch in den Top-k-Genauigkeiten wider, mit besseren
+                Ergebnissen für k=5, 10, 20 und 100 beim LSTM. Die
+                Perplexity-Werte waren beim LSTM-Modell durchweg niedriger, was
+                auf eine höhere Vorhersagequalität hinweist.
+            </p>
+            <br />
+            <p>Vergleich der Performance von RNN und FFNN</p>
+            <p>
+                Der Vergleich zwischen RNN (LSTM) und FFNN zeigte deutlich, dass
+                das RNN besser für die Wortvorhersageaufgabe geeignet ist. Dies
+                liegt an seiner Fähigkeit, sequentielle Informationen zu
+                speichern und zu verarbeiten. Während das FFNN schneller
+                trainiert wurde, mangelte es ihm an der Fähigkeit, die
+                Kontextabhängigkeit der Wörter effektiv zu erfassen, was zu
+                schlechteren Vorhersageergebnissen führte.
+            </p>
+
+            <br />
             <h1>
-                Projektdokumentation: Entwicklung eines
-                Feedforward-Neural-Networks zur Regression
+                Rekonstruktion der Trainingsdaten und Datenschutzüberlegungen
             </h1>
-            <p>
-                In diesem Projekt habe ich mich der Herausforderung gestellt,
-                eine reellwertige Funktion mit einem Feedforward-Neural-Network
-                (FNN) zu regressieren. Dabei kamen PyTorch, Next.js und FastAPI
-                zum Einsatz.
-            </p>
-            <br />
-            <h2>Kernaspekte des Projekts</h2>
-            <ul>
-                <li>
-                    <strong>Algorithmische Konfiguration:</strong> Ein
-                    signifikanter Teil meiner Zeit floss in die Ermittlung
-                    optimaler Netzwerkkonfigurationen anhand algorithmischer
-                    Kombination der Netztwerkparameter. Die Komplexität und
-                    Dauer dieses Prozesses waren größer als zunächst angenommen,
-                    und einige Fehler erschwerten die Arbeit, sodass ich für die
-                    fortschreitenden Schritte weniger Zeit hatte.
-                </li>
-                <br />
-                <li>
-                    <strong>Manuelle Optimierung:</strong> Letztendlich führte
-                    das manuelle Testen und Anpassen der Netzwerkparameter zu
-                    stetigen Verbesserungen. Insbesondere die Kombination aus
-                    Batch-Normalization und linearen Layern erwies sich als
-                    effektiv, um das Modell zu optimieren.
-                </li>
-                <br />
-                <li>
-                    <strong>Weight Decay:</strong> Die Experimente mit
-                    L2-Regularisierung hatten einen unterschiedlichen Einfluss
-                    auf die Modellperformance, was mich dazu veranlasste,
-                    verschiedene Werte zu testen und zu evaluieren.
-                </li>
-            </ul>
             <br />
             <p>
-                Das bestmögliche Modell, das ich entwickelte, erzielte niedrige
-                Verlustwerte, was auf eine hohe Genauigkeit bei der
-                Datenanpassung hindeutet.
-                <ul>
-                    <li>
-                        <strong>Bias:</strong> Durch die Feinjustierung der
-                        Modellarchitektur konnte ich den Bias reduzieren.
-                    </li>
-                    <p>
-                        <strong>Beschreibung:</strong> Fehler durch
-                        vereinfachende Annahmen im Lernalgorithmus. Ein hoher
-                        Bias führt oft zu Underfitting
-                    </p>
-                    <p>
-                        <strong>Auswirkung im Projekt:</strong> Anfangs
-                        möglicherweise hoher Bias, da das FNN-Modell zu simpel
-                        war, um die Funktion y(x) richtig abzubilden.
-                    </p>
-                    <br />
-                    <li>
-                        <strong>Variance:</strong> Das Ausbalancieren des
-                        Modells war entscheidend, um Overfitting zu vermeiden
-                    </li>
-                    <p>
-                        <strong>Beschreibung:</strong> Fehler durch
-                        Überanpassung an Trainingsdaten. Eine hohe Variance
-                        führt zu Overfitting,
-                    </p>
-                    <p>
-                        <strong>Auswirkung im Projekt:</strong> Mit zunehmender
-                        Modellkomplexität stieg möglicherweise die Variance, was
-                        zu einer guten Performance auf Trainingsdaten, aber
-                        schlechter Generalisierung führte.
-                    </p>
-                </ul>
+                Eine interessante Beobachtung war, dass das LSTM-Modell in
+                einigen Fällen fähig war, Teile der Trainingsdaten (Text aus
+                "Effie Briest") zu rekonstruieren. Dies wirft wichtige Fragen
+                hinsichtlich des Datenschutzes auf, besonders wenn man bedenkt,
+                dass private Daten wie E-Mails für das Training verwendet werden
+                könnten. In zukünftigen Projekten muss sorgfältig erwogen
+                werden, welche Daten zum Training verwendet werden, insbesondere
+                um die Privatsphäre der Nutzer zu schützen. Die Verwendung von
+                öffentlichen oder anonymisierten Daten
             </p>
-            <br />
-            <p>Ergebnisse sind unter dem Tab Lösungen ersichtlich.</p>
-            <br />
-            <ul>
-                <li>
-                    Zu beobachten war, wie sich Overfitting und Underfitting in
-                    Abhängigkeit von der Netzwerkkonfiguration verhalten.
-                </li>
-                <li>
-                    Die Integration von Batch-Normalization-Layern trug hierbei
-                    wesentlich zur Stabilisierung des Trainingsprozesses bei.
-                </li>
-            </ul>
-            <br />
-
-            <br />
-            <h1>Technologieübersicht</h1>
-            <br />
-            <div>
-                <div>
-                    <h2>PyTorch</h2>
-                    <strong> Link:</strong>{' '}
-                    <a href='https://pytorch.org/docs/stable/index.html'>
-                        PyTorch offizielle Dokumentation
-                    </a>
-                </div>
-                <br />
-                <div>
-                    <h2>NumPy</h2>
-
-                    <p>
-                        <strong>Link:</strong>{' '}
-                        <a href='https://numpy.org/doc/stable/'>
-                            NumPy offizielle Dokumentation
-                        </a>
-                    </p>
-                </div>
-            </div>
             <div className=' grid grid-cols-2 gap-1s'>
-                <img className='mx-auto' src='esa-2-doc.png' width={600}></img>
-                <img className='mx-auto' src='esa-2-doc2.png' width={600}></img>
+                <img className='mx-auto' src='esa331.png' width={600}></img>
+                <img className='mx-auto' src='esa332.png' width={600}></img>
+                <img className='mx-auto' src='esa333.png' width={600}></img>
             </div>
         </div>
     );
