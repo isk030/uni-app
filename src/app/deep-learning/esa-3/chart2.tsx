@@ -12,7 +12,8 @@ import {
 } from 'recharts';
 
 export const Chart2: FC<{
-    data: Array<{ name: string; probability: number; }>, red: boolean;
+    data: Array<{ name: string; probability: number }>;
+    red: boolean;
 }> = ({ data, red }) => {
     // const data = [
     //     {
