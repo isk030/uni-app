@@ -59,6 +59,7 @@ export const SolutionThree: FC = () => {
                             .probability as string
                     );
                     setChartData(data);
+                    window.console.log(data);
                 })
                 .catch((error) =>
                     console.error('Fehler beim Abrufen der Daten:', error)
@@ -140,11 +141,11 @@ export const SolutionThree: FC = () => {
             )}
             {chartData && text && (
                 <>
-                    <div className='h-96 col-span-3'>
+                    <div className='h-64 col-span-3'>
                         <h1>FFNN</h1>
                         <Chart2 red={false} data={chartData?.prediction1} />
                     </div>
-                    <div className='h-96 col-span-3'>
+                    <div className='h-64 col-span-3'>
                         <h1>LSTM</h1>
                         <Chart2 red data={chartData?.prediction2} />
                     </div>
