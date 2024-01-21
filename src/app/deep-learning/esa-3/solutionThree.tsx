@@ -33,7 +33,7 @@ export const SolutionThree: FC = () => {
     const [nextWord, setNextWord] = useState('');
     useEffect(() => {
         if (nextWord) {
-            setText((text) => text + ' ' + nextWord);
+            setText((oldText) => oldText + ' ' + nextWord);
             setNextWord('');
         }
         if (text) {
