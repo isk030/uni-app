@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { FC } from 'react';
 import {
     Bar,
@@ -14,7 +15,8 @@ import {
 export const Chart2: FC<{
     data: Array<{ name: string; probability: number }>;
     red: boolean;
-}> = ({ data, red }) => {
+    handleClick: (v: unknown) => void;
+}> = ({ data, red, handleClick }) => {
     // const data = [ s
     //     {
     //         name: 'Page A',
@@ -69,6 +71,7 @@ export const Chart2: FC<{
                     minPointSize={10}
                     fill={red ? '#82ca9d' : 'red'}
                     activeBar={<Rectangle fill='gold' stroke='purple' />}
+                    onClick={(v) => handleClick(v)}
                 />
             </BarChart>
         </ResponsiveContainer>

@@ -30,8 +30,12 @@ export const SolutionThree: FC = () => {
     const [prob2, setProb2] = useState<string>('');
     const [chartData, setChartData] = useState(null);
     const [topK, setTopK] = useState<number>(5);
-
+    const [nextWord, setNextWord] = useState('');
     useEffect(() => {
+        if (nextWord) {
+            setText((text) => text + ' ' + nextWord);
+            setNextWord('');
+        }
         if (text) {
             fetch(process.env.DL_API_BASE_URL + 'api/nlp', {
                 method: 'POST',
@@ -59,13 +63,12 @@ export const SolutionThree: FC = () => {
                             .probability as string
                     );
                     setChartData(data);
-                    window.console.log(data);
                 })
                 .catch((error) =>
                     console.error('Fehler beim Abrufen der Daten:', error)
                 );
         }
-    }, [debouncedText, topK]);
+    }, [debouncedText, topK, nextWord]);
 
     return (
         <div className='grid grid-cols-3 gap-4 '>
@@ -82,16 +85,17 @@ export const SolutionThree: FC = () => {
                     containerProps={{
                         className: 'grid h-full',
                     }}
+                    value={text && nextWord ? text + ' ' + nextWord : text}
                     labelProps={{
                         className: 'before:content-none after:content-none',
                     }}
                 />
             </div>
 
-            <Card className='mt-6 w-full '>
+            <Card className='w-full '>
                 <CardBody className='mx-auto text-center'>
                     <Typography variant='h5' color='blue-gray' className='mb-2'>
-                        TOP K
+                        TOP K Wörter für das nächste Wort anzeigen
                     </Typography>
                     <ButtonGroup color='gray' className='justify-center'>
                         <Button
@@ -143,11 +147,19 @@ export const SolutionThree: FC = () => {
                 <>
                     <div className='h-64 col-span-3'>
                         <h1>FFNN</h1>
-                        <Chart2 red={false} data={chartData?.prediction1} />
+                        <Chart2
+                            red={false}
+                            data={chartData?.prediction1}
+                            handleClick={(v) => setNextWord(v.name)}
+                        />
                     </div>
                     <div className='h-64 col-span-3'>
                         <h1>LSTM</h1>
-                        <Chart2 red data={chartData?.prediction2} />
+                        <Chart2
+                            red
+                            data={chartData?.prediction2}
+                            handleClick={(v) => setNextWord(v.name)}
+                        />
                     </div>
                 </>
             )}
