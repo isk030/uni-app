@@ -88,8 +88,8 @@ export const DocumentationThree = () => {
                 öffentlichen oder anonymisierten Daten
             </p>
             <div className=' grid grid-cols-2 gap-1s'>
-                <img className='mx-auto' src='esa331.png' width={600}></img>
-                <img className='mx-auto' src='esa332.png' width={600}></img>
+                <img className='mx-auto' src='fnn.png' width={600}></img>
+                <img className='mx-auto' src='lstm.png' width={600}></img>
                 <img className='mx-auto' src='esa333.png' width={600}></img>
             </div>
         </div>
